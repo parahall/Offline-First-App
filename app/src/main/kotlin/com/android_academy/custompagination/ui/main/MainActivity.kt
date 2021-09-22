@@ -1,8 +1,8 @@
-package com.android_academy.custompagination
+package com.android_academy.custompagination.ui.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.android_academy.custompagination.ui.main.MainFragment
+import com.android_academy.custompagination.R
 
 class MainActivity : AppCompatActivity() {
 
