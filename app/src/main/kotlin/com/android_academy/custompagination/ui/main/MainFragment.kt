@@ -7,11 +7,14 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android_academy.custompagination.R
 import com.android_academy.custompagination.StarWarsApp
+import com.android_academy.custompagination.models.Person
 import javax.inject.Inject
+
 
 class MainFragment : Fragment() {
 
@@ -46,13 +49,14 @@ class MainFragment : Fragment() {
         view.findViewById<RecyclerView>(R.id.recycler_view).apply {
             adapter = dataAdapter
             layoutManager = LinearLayoutManager(requireContext())
+            addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
         }
         return view
     }
 
 }
 
-private class DiffCallback(val oldData: List<String>, val newData: List<String>) :
+private class DiffCallback(val oldData: List<Person>, val newData: List<Person>) :
     DiffUtil.Callback() {
     override fun getOldListSize(): Int = oldData.size
 
@@ -69,11 +73,14 @@ private class DiffCallback(val oldData: List<String>, val newData: List<String>)
 }
 
 class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-    val textView: TextView = itemView.findViewById(R.id.item_text_view)
+    val nameTextView: TextView = itemView.findViewById(R.id.tv_name)
+    val filmsTextView: TextView = itemView.findViewById(R.id.tv_films_name)
+    val specieTextView: TextView = itemView.findViewById(R.id.tv_specie_name)
+    val starshipsTextView: TextView = itemView.findViewById(R.id.tv_startships)
 }
 
 class DataAdapter : RecyclerView.Adapter<DataViewHolder>() {
-    private var dataSet: List<String> = emptyList()
+    private var dataSet: List<Person> = emptyList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DataViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -83,18 +90,21 @@ class DataAdapter : RecyclerView.Adapter<DataViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: DataViewHolder, position: Int) {
-        holder.textView.text = dataSet[position]
+        holder.nameTextView.text = dataSet[position].name
+        holder.filmsTextView.text = dataSet[position].films.joinToString("\n") { it.title }
+        holder.specieTextView.text = dataSet[position].species.firstOrNull()?.name
+        holder.starshipsTextView.text = dataSet[position].starships.joinToString("\n") { it.name }
     }
 
     override fun getItemCount(): Int {
         return dataSet.size
     }
 
-    fun setData(data: List<String>) {
+    fun setData(data: List<Person>) {
         dataSet = data
     }
 
-    fun getData(): List<String> {
+    fun getData(): List<Person> {
         return dataSet
     }
 }

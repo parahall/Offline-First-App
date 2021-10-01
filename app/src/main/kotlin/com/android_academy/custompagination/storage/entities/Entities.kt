@@ -1,12 +1,21 @@
 package com.android_academy.custompagination.storage.entities
 
+import android.util.Log
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.android_academy.custompagination.network.models.PeopleResponse
+import com.android_academy.custompagination.Measurements
+import com.android_academy.custompagination.network.models.FilmResponse
+import com.android_academy.custompagination.network.models.PersonResponse
+import com.android_academy.custompagination.network.models.SpecieResponse
+import com.android_academy.custompagination.network.models.StarshipResponse
+import com.android_academy.custompagination.network.models.VehicleResponse
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.Types
+import kotlin.system.measureTimeMillis
 
 @Entity(tableName = "people_table")
-data class PeopleEntity(
+data class PersonEntity(
     @PrimaryKey @ColumnInfo(name = "name")
     val name: String,
     @ColumnInfo(name = "height")
@@ -23,7 +32,7 @@ data class PeopleEntity(
     val birthYear: String,
     @ColumnInfo(name = "gender")
     val gender: String,
-    @ColumnInfo(name = "homeworld")
+    @ColumnInfo(name = "homeWorld")
     val homeWorld: String,
     @ColumnInfo(name = "films")
     val films: String,
@@ -42,8 +51,21 @@ data class PeopleEntity(
 )
 
 
-fun PeopleResponse.toPeopleEntity(): PeopleEntity {
-    return PeopleEntity(
+fun PersonResponse.toPeopleEntity(
+    filmList: List<FilmResponse?>,
+    specieList: List<SpecieResponse?>,
+    vehicleList: List<VehicleResponse?>,
+    starshipList: List<StarshipResponse?>,
+    moshi: Moshi
+): PersonEntity {
+    val start = System.currentTimeMillis()
+    val films = getJson(moshi, filmList)
+    val species = getJson(moshi, specieList)
+    val vehicles = getJson(moshi, vehicleList)
+    val starships = getJson(moshi, starshipList)
+    val finish = System.currentTimeMillis() - start
+    Measurements.addSerializationMeasurement(name, finish)
+    return PersonEntity(
         name,
         height,
         mass,
@@ -52,13 +74,22 @@ fun PeopleResponse.toPeopleEntity(): PeopleEntity {
         eyeColor,
         birthYear,
         gender,
-        homeworld,
-        films.joinToString(","),
-        species.joinToString(","),
-        vehicles.joinToString(","),
-        starships.joinToString(","),
+        homeWorld,
+        films,
+        species,
+        vehicles,
+        starships,
         created,
         edited,
         url
     )
+}
+
+private inline fun <reified T> getJson(
+    moshi: Moshi,
+    list: List<T>
+): String {
+    val type = Types.newParameterizedType(List::class.java, T::class.java)
+    val adapter = moshi.adapter<List<T>>(type)
+    return adapter.toJson(list.filterNotNull())
 }

@@ -5,6 +5,7 @@ import com.android_academy.custompagination.repo.StarWarsRepo
 import com.android_academy.custompagination.ui.main.MainFragment
 import com.android_academy.custompagination.ui.main.MainFragmentViewModelFactory
 import com.android_academy.custompagination.ui.main.MainViewModel
+import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
 
@@ -12,14 +13,17 @@ import dagger.Provides
 object MainFragmentModule {
 
     @Provides
-    fun provideViewModelFactory(starWarsRepo: StarWarsRepo): MainFragmentViewModelFactory {
-        return MainFragmentViewModelFactory(starWarsRepo)
+    fun provideViewModelFactory(
+        starWarsRepo: StarWarsRepo,
+        moshi: Moshi,
+    ): MainFragmentViewModelFactory {
+        return MainFragmentViewModelFactory(starWarsRepo, moshi)
     }
 
     @Provides
     fun provideViewModel(
         factory: MainFragmentViewModelFactory,
-        fragment: MainFragment
+        fragment: MainFragment,
     ): MainViewModel {
         return ViewModelProvider(fragment, factory).get(MainViewModel::class.java)
     }

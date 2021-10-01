@@ -1,6 +1,9 @@
 package com.android_academy.custompagination.network.di
 
+import com.android_academy.custompagination.network.NetworkSource
+import com.android_academy.custompagination.network.NetworkSourceImpl
 import com.android_academy.custompagination.network.StarWarsApi
+import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -14,7 +17,7 @@ object NetworkModule {
     private const val BASE_URL = "https://swapi.dev/api/"
 
     @Provides
-    fun provideRetrofit(): Retrofit {
+    fun provideRetrofit(moshi: Moshi): Retrofit {
         val loggingInterceptor = HttpLoggingInterceptor().apply {
             level = HttpLoggingInterceptor.Level.BODY
         }
@@ -24,13 +27,23 @@ object NetworkModule {
 
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
-            .addConverterFactory(MoshiConverterFactory.create())
+            .addConverterFactory(MoshiConverterFactory.create(moshi))
             .client(okHttpBuilder.build())
             .build()
     }
 
     @Provides
+    fun providesMoshi(): Moshi {
+        return Moshi.Builder().build()
+    }
+
+    @Provides
     fun provideStarWarsApi(retrofit: Retrofit): StarWarsApi {
         return retrofit.create(StarWarsApi::class.java)
+    }
+
+    @Provides
+    fun provideNetworkSource(api: StarWarsApi): NetworkSource {
+        return NetworkSourceImpl(api)
     }
 }
