@@ -34,7 +34,7 @@ class StarWarsRepo(
     }
 
     suspend fun loadData(): Flow<List<EnrichedPersonEntity>> {
-//        fetchAllEntities()
+        fetchAllEntities()
         Log.d(TAG, "loadData: I'm here after fetch dispatched")
 
         return storageSource.getEnrichedPeople()
