@@ -106,7 +106,7 @@ data class FilmResponse(
 ) : EntityConvertible {
     override fun toEntity(): StorageEntity {
         return FilmEntity(
-            id = url.extractId(),
+            filmId = url.extractId(),
             created = created,
             director = director,
             edited = edited,
@@ -146,7 +146,7 @@ data class SpecieResponse(
 ) : EntityConvertible {
     override fun toEntity(): StorageEntity {
         return SpecieEntity(
-            id = url.extractId(),
+            specieId = url.extractId(),
             averageHeight = averageHeight,
             averageLifespan = averageLifespan,
             classification = classification,
@@ -189,7 +189,7 @@ data class VehicleResponse(
 ) : EntityConvertible {
     override fun toEntity(): StorageEntity {
         return VehicleEntity(
-            id = url.extractId(),
+            vehicleId = url.extractId(),
             cargoCapacity = cargoCapacity,
             consumables = consumables,
             costInCredits = costInCredits,
@@ -237,7 +237,7 @@ data class StarshipResponse(
 ) : EntityConvertible {
     override fun toEntity(): StorageEntity {
         return StarshipEntity(
-            id = url.extractId(),
+            starshipId = url.extractId(),
             cargoCapacity = cargoCapacity,
             consumables = consumables,
             costInCredits = costInCredits,

@@ -8,14 +8,19 @@ import com.android_academy.custompagination.storage.StorageSource
 import com.android_academy.custompagination.storage.entities.EnrichedPersonEntity
 import com.android_academy.custompagination.storage.entities.FilmEntity
 import com.android_academy.custompagination.storage.entities.PersonEntity
+import com.android_academy.custompagination.storage.entities.PersonFilmsCrossRef
+import com.android_academy.custompagination.storage.entities.PersonSpecieCrossRef
+import com.android_academy.custompagination.storage.entities.PersonStarshipCrossRef
+import com.android_academy.custompagination.storage.entities.PersonVehicleCrossRef
 import com.android_academy.custompagination.storage.entities.SpecieEntity
 import com.android_academy.custompagination.storage.entities.StarshipEntity
 import com.android_academy.custompagination.storage.entities.StorageEntity
 import com.android_academy.custompagination.storage.entities.VehicleEntity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.joinAll
 import kotlinx.coroutines.launch
 import kotlin.coroutines.coroutineContext
 
@@ -32,63 +37,74 @@ class StarWarsRepo(
 //        fetchAllEntities()
         Log.d(TAG, "loadData: I'm here after fetch dispatched")
 
-        return combine(
-            storageSource.getPeople(),
-            storageSource.getFilms(),
-            storageSource.getSpecies(),
-            storageSource.getVehicles(),
-            storageSource.getStarships()
-        ) { people: List<PersonEntity>, films: List<FilmEntity>, species: List<SpecieEntity>, vehicles: List<VehicleEntity>, starships: List<StarshipEntity> ->
-            people.map { person ->
-                EnrichedPersonEntity(
-                    person,
-                    films.filter { film ->
-                        person.filmsIds?.contains(film.id) == true
-                    },
-                    species.filter { film ->
-                        person.speciesIds?.contains(film.id) == true
-                    },
-                    vehicles.filter { film ->
-                        person.vehiclesIds?.contains(film.id) == true
-                    },
-                    starships.filter { film ->
-                        person.starshipsIds?.contains(film.id) == true
-                    },
-                )
-            }
-        }
+        return storageSource.getEnrichedPeople()
     }
 
     private suspend fun fetchAllEntities() {
-        fetchEntities({ page -> networkSource.fetchPeople(page) }, { entities ->
-            storageSource.storePeople(entities.filterIsInstance<PersonEntity>())
-        })
+        val context = coroutineContext + Dispatchers.Default
+        val scope = CoroutineScope(context)
+        scope.launch {
+            val peopleJob = fetchEntities({ page -> networkSource.fetchPeople(page) }, { entities ->
+                storageSource.storePeople(entities.filterIsInstance<PersonEntity>())
+            })
 
-        fetchEntities({ page -> networkSource.fetchFilms(page) }, { entities ->
-            storageSource.storeFilms(entities.filterIsInstance<FilmEntity>())
-        })
+            val filmsJob = fetchEntities({ page -> networkSource.fetchFilms(page) }, { entities ->
+                storageSource.storeFilms(entities.filterIsInstance<FilmEntity>())
+            })
 
-        fetchEntities({ page -> networkSource.fetchVehicles(page) }, { entities ->
-            storageSource.storeVehicles(entities.filterIsInstance<VehicleEntity>())
-        })
+            val vehiclesJob =
+                fetchEntities({ page -> networkSource.fetchVehicles(page) }, { entities ->
+                    storageSource.storeVehicles(entities.filterIsInstance<VehicleEntity>())
+                })
 
-        fetchEntities({ page -> networkSource.fetchSpecies(page) }, { entities ->
-            storageSource.storeSpecies(entities.filterIsInstance<SpecieEntity>())
-        })
+            val speciesJob =
+                fetchEntities({ page -> networkSource.fetchSpecies(page) }, { entities ->
+                    storageSource.storeSpecies(entities.filterIsInstance<SpecieEntity>())
+                })
 
-        fetchEntities({ page -> networkSource.fetchStarships(page) }, { entities ->
-            storageSource.storeStarships(entities.filterIsInstance<StarshipEntity>())
-        })
+            val starshipsJob =
+                fetchEntities({ page -> networkSource.fetchStarships(page) }, { entities ->
+                    storageSource.storeStarships(entities.filterIsInstance<StarshipEntity>())
+                })
+            joinAll(peopleJob, filmsJob, vehiclesJob, speciesJob, starshipsJob)
+            Log.d(TAG, "All jobs are done!")
+            storeCrossReferences()
+        }
+    }
+
+    private suspend fun storeCrossReferences() {
+        val personFilmsRefs = mutableListOf<PersonFilmsCrossRef>()
+        val personSpecieRefs = mutableListOf<PersonSpecieCrossRef>()
+        val personVehicleRefs = mutableListOf<PersonVehicleCrossRef>()
+        val personStarshipRefs = mutableListOf<PersonStarshipCrossRef>()
+        storageSource.getPeopleSync().forEach { personEntity ->
+            personEntity.filmsIds?.map { filmId ->
+                personFilmsRefs.add(PersonFilmsCrossRef(personId = personEntity.personId, filmId))
+            }
+            personEntity.speciesIds?.map { specieId ->
+                personSpecieRefs.add(PersonSpecieCrossRef(personId = personEntity.personId, specieId))
+            }
+            personEntity.vehiclesIds?.map { vehicleId ->
+                personVehicleRefs.add(PersonVehicleCrossRef(personId = personEntity.personId, vehicleId))
+            }
+            personEntity.starshipsIds?.map { starshipId ->
+                personStarshipRefs.add(PersonStarshipCrossRef(personId = personEntity.personId, starshipId))
+            }
+        }
+        storageSource.storePeopleFilmsRef(personFilmsRefs)
+        storageSource.storePeopleSpecieRef(personSpecieRefs)
+        storageSource.storePeopleVehicleRef(personVehicleRefs)
+        storageSource.storePeopleStarshipRef(personStarshipRefs)
     }
 
 
     private suspend fun <T : EntityConvertible> fetchEntities(
         networkSourceCallable: suspend (Int) -> Result<PagedResponse<T>>,
         storageSourceFunction: suspend (List<StorageEntity>) -> Unit
-    ) {
+    ): Job {
         val context = coroutineContext + Dispatchers.IO
         val scope = CoroutineScope(context)
-        scope.launch {
+        return scope.launch {
             var hasNext = true
             var pageNumb = 1
             while (hasNext) {

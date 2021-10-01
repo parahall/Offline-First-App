@@ -6,10 +6,16 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy.REPLACE
 import androidx.room.Query
 import androidx.room.RoomDatabase
+import androidx.room.Transaction
 import androidx.room.TypeConverter
 import androidx.room.TypeConverters
+import com.android_academy.custompagination.storage.entities.EnrichedPersonEntity
 import com.android_academy.custompagination.storage.entities.FilmEntity
 import com.android_academy.custompagination.storage.entities.PersonEntity
+import com.android_academy.custompagination.storage.entities.PersonFilmsCrossRef
+import com.android_academy.custompagination.storage.entities.PersonSpecieCrossRef
+import com.android_academy.custompagination.storage.entities.PersonStarshipCrossRef
+import com.android_academy.custompagination.storage.entities.PersonVehicleCrossRef
 import com.android_academy.custompagination.storage.entities.SpecieEntity
 import com.android_academy.custompagination.storage.entities.StarshipEntity
 import com.android_academy.custompagination.storage.entities.VehicleEntity
@@ -22,8 +28,12 @@ import kotlinx.coroutines.flow.Flow
         VehicleEntity::class,
         StarshipEntity::class,
         SpecieEntity::class,
-               ],
-    version = 1,
+        PersonFilmsCrossRef::class,
+        PersonSpecieCrossRef::class,
+        PersonVehicleCrossRef::class,
+        PersonStarshipCrossRef::class,
+    ],
+    version = 2,
     exportSchema = false
 )
 @TypeConverters(Converters::class)
@@ -33,6 +43,26 @@ abstract class StarWarsDb : RoomDatabase() {
     abstract fun vehicleDao(): VehicleDao
     abstract fun starshipDao(): StarshipDao
     abstract fun specieDao(): SpecieDao
+    abstract fun enrichedDao(): EnrichDao
+}
+
+@Dao
+interface EnrichDao {
+    @Transaction
+    @Query("SELECT * FROM people_table")
+    fun getAll(): Flow<List<EnrichedPersonEntity>>
+
+    @Insert(onConflict = REPLACE)
+    fun insertAll(vararg crossRef: PersonFilmsCrossRef)
+
+    @Insert(onConflict = REPLACE)
+    fun insertAll(vararg crossRef: PersonSpecieCrossRef)
+    @Insert(onConflict = REPLACE)
+
+    fun insertAll(vararg crossRef: PersonVehicleCrossRef)
+
+    @Insert(onConflict = REPLACE)
+    fun insertAll(vararg crossRef: PersonStarshipCrossRef)
 }
 
 @Dao
@@ -42,6 +72,9 @@ interface PersonDao {
 
     @Insert(onConflict = REPLACE)
     fun insertAll(vararg people: PersonEntity)
+
+    @Query("SELECT * FROM people_table")
+    fun getAllSync(): List<PersonEntity>
 }
 
 @Dao
