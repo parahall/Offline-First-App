@@ -16,13 +16,9 @@ interface StorageSource {
     fun getPeople(): Flow<List<PersonEntity>>
     suspend fun getPeopleSync(): List<PersonEntity>
     fun storePeople(entities: List<PersonEntity>)
-    fun getFilms(): Flow<List<FilmEntity>>
     fun storeFilms(entities: List<FilmEntity>)
-    fun getVehicles(): Flow<List<VehicleEntity>>
     fun storeVehicles(entities: List<VehicleEntity>)
-    fun getStarships(): Flow<List<StarshipEntity>>
     fun storeStarships(entities: List<StarshipEntity>)
-    fun getSpecies(): Flow<List<SpecieEntity>>
     fun storeSpecies(entities: List<SpecieEntity>)
     fun storePeopleFilmsRef(entities: List<PersonFilmsCrossRef>)
     fun getEnrichedPeople() : Flow<List<EnrichedPersonEntity>>
@@ -45,32 +41,16 @@ class StorageSourceImpl(private val db: StarWarsDb) : StorageSource {
         db.personDao().insertAll(*entities.toTypedArray())
     }
 
-    override fun getFilms(): Flow<List<FilmEntity>> {
-        return db.filmDao().getAll()
-    }
-
     override fun storeFilms(entities: List<FilmEntity>) {
         db.filmDao().insertAll(*entities.toTypedArray())
-    }
-
-    override fun getVehicles(): Flow<List<VehicleEntity>> {
-        return db.vehicleDao().getAll()
     }
 
     override fun storeVehicles(entities: List<VehicleEntity>) {
         db.vehicleDao().insertAll(*entities.toTypedArray())
     }
 
-    override fun getStarships(): Flow<List<StarshipEntity>> {
-        return db.starshipDao().getAll()
-    }
-
     override fun storeStarships(entities: List<StarshipEntity>) {
         db.starshipDao().insertAll(*entities.toTypedArray())
-    }
-
-    override fun getSpecies(): Flow<List<SpecieEntity>> {
-        return db.specieDao().getAll()
     }
 
     override fun storeSpecies(entities: List<SpecieEntity>) {

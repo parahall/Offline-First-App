@@ -3,6 +3,7 @@ package com.android_academy.custompagination.storage
 import androidx.room.Dao
 import androidx.room.Database
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy.IGNORE
 import androidx.room.OnConflictStrategy.REPLACE
 import androidx.room.Query
 import androidx.room.RoomDatabase
@@ -52,16 +53,16 @@ interface EnrichDao {
     @Query("SELECT * FROM people_table")
     fun getAll(): Flow<List<EnrichedPersonEntity>>
 
-    @Insert(onConflict = REPLACE)
+    @Insert(onConflict = IGNORE)
     fun insertAll(vararg crossRef: PersonFilmsCrossRef)
 
-    @Insert(onConflict = REPLACE)
+    @Insert(onConflict = IGNORE)
     fun insertAll(vararg crossRef: PersonSpecieCrossRef)
-    @Insert(onConflict = REPLACE)
+    @Insert(onConflict = IGNORE)
 
     fun insertAll(vararg crossRef: PersonVehicleCrossRef)
 
-    @Insert(onConflict = REPLACE)
+    @Insert(onConflict = IGNORE)
     fun insertAll(vararg crossRef: PersonStarshipCrossRef)
 }
 
