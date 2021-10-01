@@ -10,11 +10,12 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import java.util.concurrent.TimeUnit
 
 @Module
 object NetworkModule {
 
-    private const val BASE_URL = "https://swapi.dev/api/"
+    private const val BASE_URL = "http://swapi.dev/api/"
 
     @Provides
     fun provideRetrofit(moshi: Moshi): Retrofit {
@@ -23,7 +24,8 @@ object NetworkModule {
         }
 
         val okHttpBuilder = OkHttpClient.Builder()
-            .addInterceptor(loggingInterceptor)
+            .addInterceptor(loggingInterceptor).readTimeout(60, TimeUnit.SECONDS)
+            .connectTimeout(60, TimeUnit.SECONDS)
 
         return Retrofit.Builder()
             .baseUrl(BASE_URL)

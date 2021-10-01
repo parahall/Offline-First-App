@@ -2,140 +2,118 @@ package com.android_academy.custompagination.repo
 
 import android.util.Log
 import com.android_academy.custompagination.network.NetworkSource
-import com.android_academy.custompagination.network.StarWarsApi
-import com.android_academy.custompagination.network.models.FilmResponse
-import com.android_academy.custompagination.network.models.PersonResponse
-import com.android_academy.custompagination.network.models.SpecieResponse
-import com.android_academy.custompagination.network.models.StarshipResponse
-import com.android_academy.custompagination.network.models.VehicleResponse
+import com.android_academy.custompagination.network.models.EntityConvertible
+import com.android_academy.custompagination.network.models.PagedResponse
 import com.android_academy.custompagination.storage.StorageSource
+import com.android_academy.custompagination.storage.entities.EnrichedPersonEntity
+import com.android_academy.custompagination.storage.entities.FilmEntity
 import com.android_academy.custompagination.storage.entities.PersonEntity
-import com.android_academy.custompagination.storage.entities.toPeopleEntity
-import com.squareup.moshi.Moshi
+import com.android_academy.custompagination.storage.entities.SpecieEntity
+import com.android_academy.custompagination.storage.entities.StarshipEntity
+import com.android_academy.custompagination.storage.entities.StorageEntity
+import com.android_academy.custompagination.storage.entities.VehicleEntity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
-import retrofit2.Response
 import kotlin.coroutines.coroutineContext
 
 class StarWarsRepo(
     private val storageSource: StorageSource,
     private val networkSource: NetworkSource,
-    private val moshi: Moshi
 ) {
-
-    private val fetchedFilms: MutableMap<String, FilmResponse> = mutableMapOf()
-    private val fetchedSpecies: MutableMap<String, SpecieResponse> = mutableMapOf()
-    private val fetchedVehicles: MutableMap<String, VehicleResponse> = mutableMapOf()
-    private val fetchedStarships: MutableMap<String, StarshipResponse> = mutableMapOf()
 
     companion object {
         const val TAG = "StarWarsRepo"
     }
 
-    suspend fun loadData(): Flow<List<PersonEntity>> {
-        fetchPeople()
+    suspend fun loadData(): Flow<List<EnrichedPersonEntity>> {
+//        fetchAllEntities()
         Log.d(TAG, "loadData: I'm here after fetch dispatched")
 
-        return storageSource.getPeople()
+        return combine(
+            storageSource.getPeople(),
+            storageSource.getFilms(),
+            storageSource.getSpecies(),
+            storageSource.getVehicles(),
+            storageSource.getStarships()
+        ) { people: List<PersonEntity>, films: List<FilmEntity>, species: List<SpecieEntity>, vehicles: List<VehicleEntity>, starships: List<StarshipEntity> ->
+            people.map { person ->
+                EnrichedPersonEntity(
+                    person,
+                    films.filter { film ->
+                        person.filmsIds?.contains(film.id) == true
+                    },
+                    species.filter { film ->
+                        person.speciesIds?.contains(film.id) == true
+                    },
+                    vehicles.filter { film ->
+                        person.vehiclesIds?.contains(film.id) == true
+                    },
+                    starships.filter { film ->
+                        person.starshipsIds?.contains(film.id) == true
+                    },
+                )
+            }
+        }
     }
 
-    private suspend fun fetchPeople() {
+    private suspend fun fetchAllEntities() {
+        fetchEntities({ page -> networkSource.fetchPeople(page) }, { entities ->
+            storageSource.storePeople(entities.filterIsInstance<PersonEntity>())
+        })
+
+        fetchEntities({ page -> networkSource.fetchFilms(page) }, { entities ->
+            storageSource.storeFilms(entities.filterIsInstance<FilmEntity>())
+        })
+
+        fetchEntities({ page -> networkSource.fetchVehicles(page) }, { entities ->
+            storageSource.storeVehicles(entities.filterIsInstance<VehicleEntity>())
+        })
+
+        fetchEntities({ page -> networkSource.fetchSpecies(page) }, { entities ->
+            storageSource.storeSpecies(entities.filterIsInstance<SpecieEntity>())
+        })
+
+        fetchEntities({ page -> networkSource.fetchStarships(page) }, { entities ->
+            storageSource.storeStarships(entities.filterIsInstance<StarshipEntity>())
+        })
+    }
+
+
+    private suspend fun <T : EntityConvertible> fetchEntities(
+        networkSourceCallable: suspend (Int) -> Result<PagedResponse<T>>,
+        storageSourceFunction: suspend (List<StorageEntity>) -> Unit
+    ) {
         val context = coroutineContext + Dispatchers.IO
         val scope = CoroutineScope(context)
         scope.launch {
             var hasNext = true
             var pageNumb = 1
             while (hasNext) {
-                hasNext = fetchPeoplePage(pageNumb)
+                hasNext = fetchPage(pageNumb, networkSourceCallable, storageSourceFunction)
                 pageNumb++
             }
-            fetchedFilms.clear()
-            fetchedSpecies.clear()
-            fetchedStarships.clear()
-            fetchedVehicles.clear()
         }
     }
 
-    private suspend fun fetchPeoplePage(pageNumb: Int): Boolean {
-        val pageResponseResult = networkSource.fetchPeople(pageNumb)
-        Log.d(TAG, "fetchPeopleData: people fetched. page: $pageNumb")
+
+    private suspend fun <T : EntityConvertible> fetchPage(
+        pageNumb: Int,
+        fetchFunction: suspend (Int) -> Result<PagedResponse<T>>,
+        storageFunction: suspend (List<StorageEntity>) -> Unit
+    ): Boolean {
+        val pageResponseResult = fetchFunction.invoke(pageNumb)
         pageResponseResult.getOrNull()?.let { page ->
-            val entities = page.results.map { enrichPerson(it) }
-            storageSource.storePeople(entities)
+            Log.i(TAG, "fetchPage: page $pageNumb fetched")
+            val entities = page.results.map { it.toEntity() }
+            storageFunction.invoke(entities)
             return page.next?.isNotEmpty() == true
         } ?: run {
+            Log.w(TAG, "fetchPage: error on page $pageNumb")
             return false
         }
     }
-
-    private suspend fun enrichPerson(personResponse: PersonResponse): PersonEntity {
-        return coroutineScope {
-            val job = async {
-                val filmsIds = getIds(personResponse.films)
-                val speciesIds = getIds(personResponse.species)
-                val vehiclesIds = getIds(personResponse.vehicles)
-                val starshipsIds = getIds(personResponse.starships)
-
-                populateEnrichDataCache(
-                    filmsIds,
-                    { id -> networkSource.getFilm(id)},
-                    fetchedFilms
-                )
-
-                val filmList = getCachedDataList(filmsIds, fetchedFilms)
-                populateEnrichDataCache(
-                    speciesIds,
-                    { id -> networkSource.getSpecie(id) },
-                    fetchedSpecies
-                )
-                val specieList = getCachedDataList(speciesIds, fetchedSpecies)
-                populateEnrichDataCache(
-                    vehiclesIds,
-                    { id -> networkSource.getVehicle(id) },
-                    fetchedVehicles
-                )
-                val vehicleList = getCachedDataList(vehiclesIds, fetchedVehicles)
-                populateEnrichDataCache(
-                    starshipsIds,
-                    { id -> networkSource.getStarship(id) },
-                    fetchedStarships
-                )
-                val starshipList = getCachedDataList(starshipsIds, fetchedStarships)
-
-                personResponse.toPeopleEntity(
-                    filmList,
-                    specieList,
-                    vehicleList,
-                    starshipList,
-                    moshi
-                )
-            }
-            return@coroutineScope job.await()
-        }
-    }
-
-    private suspend fun <T> populateEnrichDataCache(
-        ids: List<String>,
-        callFunction: suspend (id: String) -> Response<T>,
-        cache: MutableMap<String, T>
-    ) {
-        ids.filter { !cache.containsKey(it) }.map { id ->
-            val result = networkSource.fetchModel(callFunction, id)
-            result.getOrNull()?.let {
-                cache.put(id, it)
-            }
-        }
-    }
-
-    private fun <T> getCachedDataList(ids: List<String>, cache: Map<String, T>) =
-        cache.filter { ids.contains(it.key) }.values.toList()
-
-
-    private fun getIds(urls: List<String>) =
-        urls.map { it.split('/').dropLast(1).last() }
 
 }
