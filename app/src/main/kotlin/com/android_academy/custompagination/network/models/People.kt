@@ -1,6 +1,12 @@
 package com.android_academy.custompagination.network.models
 
-import com.android_academy.custompagination.models.Film
+import com.android_academy.custompagination.storage.entities.FilmEntity
+import com.android_academy.custompagination.storage.entities.PersonEntity
+import com.android_academy.custompagination.storage.entities.SpecieEntity
+import com.android_academy.custompagination.storage.entities.StarshipEntity
+import com.android_academy.custompagination.storage.entities.StorageEntity
+import com.android_academy.custompagination.storage.entities.VehicleEntity
+import com.android_academy.custompagination.storage.entities.extractId
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
@@ -15,6 +21,10 @@ data class PagedResponse<T>(
     @Json(name = "results")
     val results: List<T>
 )
+
+interface EntityConvertible {
+    fun toEntity(): StorageEntity
+}
 
 @JsonClass(generateAdapter = true)
 data class PersonResponse(
@@ -37,20 +47,42 @@ data class PersonResponse(
     @Json(name = "homeworld")
     val homeWorld: String,
     @Json(name = "films")
-    val films: List<String>,
+    val filmsUrls: List<String>,
     @Json(name = "species")
-    val species: List<String>,
+    val speciesUrls: List<String>,
     @Json(name = "vehicles")
-    val vehicles: List<String>,
+    val vehiclesUrls: List<String>,
     @Json(name = "starships")
-    val starships: List<String>,
+    val starshipsUrls: List<String>,
     @Json(name = "created")
     val created: String,
     @Json(name = "edited")
     val edited: String,
     @Json(name = "url")
     val url: String
-)
+) : EntityConvertible {
+    override fun toEntity(): StorageEntity {
+        return PersonEntity(
+            url.extractId(),
+            name,
+            height,
+            mass,
+            hairColor,
+            skinColor,
+            eyeColor,
+            birthYear,
+            gender,
+            homeWorld,
+            filmsUrls.map { it.extractId() },
+            speciesUrls.map { it.extractId() },
+            vehiclesUrls.map { it.extractId() },
+            starshipsUrls.map { it.extractId() },
+            created,
+            edited,
+            url
+        )
+    }
+}
 
 @JsonClass(generateAdapter = true)
 data class FilmResponse(
@@ -58,7 +90,8 @@ data class FilmResponse(
     val created: String,
     val director: String,
     val edited: String,
-    val episode_id: Int,
+    @Json(name = "episode_id")
+    val episodeId: Int,
     @Json(name = "opening_crawl")
     val openingCrawl: String,
     val planets: List<String>?,
@@ -70,25 +103,23 @@ data class FilmResponse(
     val title: String,
     val url: String,
     val vehicles: List<String>?
-)
+) : EntityConvertible {
+    override fun toEntity(): StorageEntity {
+        return FilmEntity(
+            filmId = url.extractId(),
+            created = created,
+            director = director,
+            edited = edited,
+            episodeId = episodeId,
+            openingCrawl = openingCrawl,
+            producer = producer,
+            releaseDate = releaseDate,
+            title = title,
+            url = url
+        )
+    }
+}
 
-fun FilmResponse.toModel(): Film =
-    Film(
-        characters,
-        created,
-        director,
-        edited,
-        episode_id,
-        openingCrawl,
-        planets,
-        producer,
-        releaseDate,
-        species,
-        starships,
-        title,
-        url,
-        vehicles
-    )
 
 @JsonClass(generateAdapter = true)
 data class SpecieResponse(
@@ -102,7 +133,8 @@ data class SpecieResponse(
     val edited: String,
     val eye_colors: String,
     val films: List<String>?,
-    val hair_colors: String,
+    @Json(name = "hair_colors")
+    val hairColors: String,
     @Json(name = "homeworld")
     val homeWorld: String?,
     val language: String,
@@ -111,7 +143,26 @@ data class SpecieResponse(
     @Json(name = "skin_colors")
     val skinColors: String,
     val url: String
-)
+) : EntityConvertible {
+    override fun toEntity(): StorageEntity {
+        return SpecieEntity(
+            specieId = url.extractId(),
+            averageHeight = averageHeight,
+            averageLifespan = averageLifespan,
+            classification = classification,
+            created = created,
+            designation = designation,
+            edited = edited,
+            eye_colors = eye_colors,
+            hairColors = hairColors,
+            homeWorld = homeWorld,
+            language = language,
+            name = name,
+            skinColors = skinColors,
+            url = url
+        )
+    }
+}
 
 @JsonClass(generateAdapter = true)
 data class VehicleResponse(
@@ -135,11 +186,32 @@ data class VehicleResponse(
     val url: String,
     @Json(name = "vehicle_class")
     val vehicleClass: String
-)
+) : EntityConvertible {
+    override fun toEntity(): StorageEntity {
+        return VehicleEntity(
+            vehicleId = url.extractId(),
+            cargoCapacity = cargoCapacity,
+            consumables = consumables,
+            costInCredits = costInCredits,
+            created = created,
+            crew = crew,
+            edited = edited,
+            length = length,
+            manufacturer = manufacturer,
+            maxAtmosphericSpeed = maxAtmosphericSpeed,
+            model = model,
+            name = name,
+            passengers = passengers,
+            url = url,
+            vehicleClass = vehicleClass
+        )
+    }
+}
 
 @JsonClass(generateAdapter = true)
 data class StarshipResponse(
-    val MGLT: String,
+    @Json(name = "MGLT")
+    val mglt: String,
     @Json(name = "cargo_capacity")
     val cargoCapacity: String,
     val consumables: String,
@@ -162,4 +234,26 @@ data class StarshipResponse(
     @Json(name = "starship_class")
     val starshipClass: String,
     val url: String
-)
+) : EntityConvertible {
+    override fun toEntity(): StorageEntity {
+        return StarshipEntity(
+            starshipId = url.extractId(),
+            cargoCapacity = cargoCapacity,
+            consumables = consumables,
+            costInCredits = costInCredits,
+            created = created,
+            crew = crew,
+            edited = edited,
+            length = length,
+            manufacturer = manufacturer,
+            maxAtmosphericSpeed = maxAtmosphericSpeed,
+            model = model,
+            name = name,
+            passengers = passengers,
+            url = url,
+            hyperdriveRating = hyperdriveRating,
+            mglt = mglt,
+            starshipClass = starshipClass
+        )
+    }
+}
