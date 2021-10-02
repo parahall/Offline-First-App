@@ -14,7 +14,6 @@ import kotlinx.coroutines.flow.Flow
 
 interface StorageSource {
     fun getPeople(): Flow<List<PersonEntity>>
-    suspend fun getPeopleSync(): List<PersonEntity>
     fun storePeople(entities: List<PersonEntity>)
     fun storeFilms(entities: List<FilmEntity>)
     fun storeVehicles(entities: List<VehicleEntity>)
@@ -22,7 +21,7 @@ interface StorageSource {
     fun storeSpecies(entities: List<SpecieEntity>)
     fun storePeopleFilmsRef(entities: List<PersonFilmsCrossRef>)
     fun getEnrichedPeople() : Flow<List<EnrichedPersonEntity>>
-    fun storePeopleSpecieRef(personSpecieCrossrefs: List<PersonSpecieCrossRef>)
+    fun storePeopleSpecieRef(entities: List<PersonSpecieCrossRef>)
     fun storePeopleStarshipRef(entities: List<PersonStarshipCrossRef>)
     fun storePeopleVehicleRef(entities: List<PersonVehicleCrossRef>)
 }
@@ -31,10 +30,6 @@ class StorageSourceImpl(private val db: StarWarsDb) : StorageSource {
 
     override fun getPeople(): Flow<List<PersonEntity>> {
         return db.personDao().getAll()
-    }
-
-    override suspend fun getPeopleSync(): List<PersonEntity> {
-        return db.personDao().getAllSync()
     }
 
     override fun storePeople(entities: List<PersonEntity>) {

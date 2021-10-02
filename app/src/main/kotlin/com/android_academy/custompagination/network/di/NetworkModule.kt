@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit
 @Module
 object NetworkModule {
 
-    private const val BASE_URL = "http://swapi.dev/api/"
+    private const val BASE_URL = "https://swapi.dev/api/"
 
     @Provides
     fun provideRetrofit(moshi: Moshi): Retrofit {

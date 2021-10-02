@@ -1,7 +1,9 @@
 package com.android_academy.custompagination.di
 
+import com.android_academy.custompagination.network.PushMessagingService
 import com.android_academy.custompagination.network.StarWarsApi
 import com.android_academy.custompagination.network.di.NetworkModule
+import com.android_academy.custompagination.prefetch.StarWarsWorker
 import com.android_academy.custompagination.repo.StarWarsRepo
 import com.android_academy.custompagination.repo.di.StarWarsRepoModule
 import com.android_academy.custompagination.storage.StarWarsDb
@@ -19,4 +21,6 @@ interface AppComponent {
     fun starWarsRepo(): StarWarsRepo
     fun moshi(): Moshi
     fun provideMainFragSubcomponent(): MainFragmentComponent.Factory
+    fun inject(starWarsWorker: StarWarsWorker)
+    fun inject(starWarsWorker: PushMessagingService)
 }

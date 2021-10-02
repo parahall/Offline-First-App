@@ -18,10 +18,6 @@ interface NetworkSource {
     suspend fun getVehicle(id: String): Response<VehicleResponse>
     suspend fun getSpecie(id: String): Response<SpecieResponse>
     suspend fun getStarship(id: String): Response<StarshipResponse>
-    suspend fun <T> fetchModel(
-        callFunction: suspend (id: String) -> Response<T>,
-        id: String
-    ): Result<T>
 }
 
 
@@ -45,13 +41,6 @@ class NetworkSourceImpl(private val api: StarWarsApi) : NetworkSource {
 
     override suspend fun fetchFilms(pageNumb: Int): Result<PagedResponse<FilmResponse>> {
         return safeResultApiCall { api.getFilms(pageNumb) }
-    }
-
-    override suspend fun <T> fetchModel(
-        callFunction: suspend (id: String) -> Response<T>,
-        id: String
-    ): Result<T> {
-        return safeResultApiCall { callFunction(id) }
     }
 
     override suspend fun getFilm(id: String) = api.getFilm(id)

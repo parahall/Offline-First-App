@@ -2,6 +2,7 @@ package com.android_academy.custompagination.repo.di
 
 import com.android_academy.custompagination.network.NetworkSource
 import com.android_academy.custompagination.repo.StarWarsRepo
+import com.android_academy.custompagination.repo.StarWarsRepoImpl
 import com.android_academy.custompagination.storage.StorageSource
 import dagger.Module
 import dagger.Provides
@@ -14,6 +15,6 @@ object StarWarsRepoModule {
         storageSource: StorageSource,
         networkSource: NetworkSource,
     ): StarWarsRepo {
-        return StarWarsRepo(storageSource, networkSource)
+        return StarWarsRepoImpl(storageSource, networkSource)
     }
 }
