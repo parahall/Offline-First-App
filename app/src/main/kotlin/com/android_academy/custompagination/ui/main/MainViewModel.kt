@@ -44,6 +44,12 @@ class MainViewModel(private val dataRepo: StarWarsRepo, private val moshi: Moshi
         }
     }
 
+    fun onFavoriteClicked(personId: Int) {
+        viewModelScope.launch(Dispatchers.Default) {
+            dataRepo.toggleFavoriteState(personId)
+        }
+    }
+
     companion object {
         const val TAG = "MainViewModel"
     }

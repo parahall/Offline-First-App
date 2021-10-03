@@ -42,8 +42,25 @@ data class EnrichedPersonEntity(
         entityColumn = "starship_id",
         associateBy = Junction(PersonStarshipCrossRef::class)
     )
-    val starships: List<StarshipEntity>
+    val starships: List<StarshipEntity>,
+
+    @Relation(
+        parentColumn = "person_id",
+        entityColumn = "person_id"
+    )
+    val favoriteProps: FavoritePersonEntity?
 )
+
+
+@Entity(tableName = "favorite_people_table")
+data class FavoritePersonEntity(
+    @PrimaryKey
+    @ColumnInfo(name = "person_id")
+    val personId: Int,
+    @ColumnInfo(name = "is_favorite")
+    val isFavorite: Boolean
+)
+
 
 @Entity(tableName = "person_film_table", primaryKeys = ["person_id", "film_id"])
 data class PersonFilmsCrossRef(
@@ -79,6 +96,7 @@ data class PersonStarshipCrossRef(
 
 fun EnrichedPersonEntity.toPerson(): Person {
     return Person(
+        personEntity.personId,
         personEntity.name,
         personEntity.height,
         personEntity.mass,
@@ -94,10 +112,10 @@ fun EnrichedPersonEntity.toPerson(): Person {
         starships.map { it.toModel() },
         personEntity.created,
         personEntity.edited,
-        personEntity.url
+        personEntity.url,
+        favoriteProps?.isFavorite ?: false
     )
 }
-
 
 @Entity(tableName = "people_table")
 data class PersonEntity(

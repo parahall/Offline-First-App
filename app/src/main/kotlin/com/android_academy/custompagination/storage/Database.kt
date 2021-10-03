@@ -11,6 +11,7 @@ import androidx.room.Transaction
 import androidx.room.TypeConverter
 import androidx.room.TypeConverters
 import com.android_academy.custompagination.storage.entities.EnrichedPersonEntity
+import com.android_academy.custompagination.storage.entities.FavoritePersonEntity
 import com.android_academy.custompagination.storage.entities.FilmEntity
 import com.android_academy.custompagination.storage.entities.PersonEntity
 import com.android_academy.custompagination.storage.entities.PersonFilmsCrossRef
@@ -33,8 +34,9 @@ import kotlinx.coroutines.flow.Flow
         PersonSpecieCrossRef::class,
         PersonVehicleCrossRef::class,
         PersonStarshipCrossRef::class,
+        FavoritePersonEntity::class,
     ],
-    version = 2,
+    version = 3,
     exportSchema = false
 )
 @TypeConverters(Converters::class)
@@ -45,6 +47,22 @@ abstract class StarWarsDb : RoomDatabase() {
     abstract fun starshipDao(): StarshipDao
     abstract fun specieDao(): SpecieDao
     abstract fun enrichedDao(): EnrichDao
+    abstract fun favoritesDao(): FavoritesDao
+}
+
+@Dao
+interface FavoritesDao {
+    @Transaction
+    fun toggleFavorites(personId: Int) {
+        val isFavor = getFavoriteStatus(personId) ?: false
+        insert(FavoritePersonEntity(personId, !isFavor))
+    }
+
+    @Query("SELECT is_favorite FROM favorite_people_table WHERE person_id = :personId")
+    fun getFavoriteStatus(personId: Int): Boolean?
+
+    @Insert(onConflict = REPLACE)
+    fun insert(entity: FavoritePersonEntity)
 }
 
 @Dao
@@ -58,6 +76,7 @@ interface EnrichDao {
 
     @Insert(onConflict = IGNORE)
     fun insertAll(vararg crossRef: PersonSpecieCrossRef)
+
     @Insert(onConflict = IGNORE)
 
     fun insertAll(vararg crossRef: PersonVehicleCrossRef)

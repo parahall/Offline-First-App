@@ -30,6 +30,7 @@ import kotlin.coroutines.coroutineContext
 interface StarWarsRepo {
     suspend fun loadData(): Flow<List<EnrichedPersonEntity>>
     suspend fun fetchData()
+    suspend fun toggleFavoriteState(personId: Int)
 
     companion object {
         const val TAG = "StarWarsRepo"
@@ -59,6 +60,10 @@ class StarWarsRepoImpl(
 
     override suspend fun fetchData() {
         fetchDataOperation.getOrAwait()
+    }
+
+    override suspend fun toggleFavoriteState(personId: Int) {
+        storageSource.toggleFavoriteState(personId)
     }
 
     private suspend fun fetchAllEntitiesInternal() {

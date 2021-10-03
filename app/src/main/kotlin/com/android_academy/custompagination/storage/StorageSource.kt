@@ -20,10 +20,11 @@ interface StorageSource {
     fun storeStarships(entities: List<StarshipEntity>)
     fun storeSpecies(entities: List<SpecieEntity>)
     fun storePeopleFilmsRef(entities: List<PersonFilmsCrossRef>)
-    fun getEnrichedPeople() : Flow<List<EnrichedPersonEntity>>
+    fun getEnrichedPeople(): Flow<List<EnrichedPersonEntity>>
     fun storePeopleSpecieRef(entities: List<PersonSpecieCrossRef>)
     fun storePeopleStarshipRef(entities: List<PersonStarshipCrossRef>)
     fun storePeopleVehicleRef(entities: List<PersonVehicleCrossRef>)
+    suspend fun toggleFavoriteState(personId: Int)
 }
 
 class StorageSourceImpl(private val db: StarWarsDb) : StorageSource {
@@ -68,10 +69,13 @@ class StorageSourceImpl(private val db: StarWarsDb) : StorageSource {
         db.enrichedDao().insertAll(*entities.toTypedArray())
     }
 
+    override suspend fun toggleFavoriteState(personId: Int) {
+        db.favoritesDao().toggleFavorites(personId)
+    }
+
     override fun storePeopleStarshipRef(entities: List<PersonStarshipCrossRef>) {
         db.enrichedDao().insertAll(*entities.toTypedArray())
     }
-
 
 
 }

@@ -1,6 +1,7 @@
 package com.android_academy.custompagination.models
 
 data class Person(
+    val personId: Int,
     val name: String,
     val height: String,
     val mass: String,
@@ -16,7 +17,8 @@ data class Person(
     val starships: List<Starship>,
     val created: String,
     val edited: String,
-    val url: String
+    val url: String,
+    val isFavor: Boolean
 )
 
 data class Film(

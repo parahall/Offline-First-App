@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/AndroidWorkspace/CustomPagination/app/src/main/res/drawable/outline_star_24.xml" value="0.32135416666666666" />
         <entry key="..\:/AndroidWorkspace/CustomPagination/app/src/main/res/layout/item_view.xml" value="0.3203125" />
         <entry key="..\:/AndroidWorkspace/CustomPagination/app/src/main/res/layout/main_fragment.xml" value="0.30625" />
       </map>

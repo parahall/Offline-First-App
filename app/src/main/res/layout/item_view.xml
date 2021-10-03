@@ -11,8 +11,8 @@
         android:id="@+id/constraintLayout2"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        app:layout_constraintEnd_toStartOf="@+id/guideline"
         android:layout_marginEnd="4dp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -72,6 +72,7 @@
         android:id="@+id/constraintLayout"
         android:layout_width="0dp"
         android:layout_height="match_parent"
+        app:layout_constraintEnd_toStartOf="@+id/iv_favorite"
         app:layout_constraintStart_toStartOf="@+id/guideline"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -81,9 +82,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:text="Specie: "
-            app:layout_constraintVertical_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
 
         <TextView
             android:id="@+id/tv_specie_name"
@@ -118,5 +119,14 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/specie_label" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ImageView
+        android:id="@+id/iv_favorite"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:src="@drawable/outline_star_outline_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/design_default_color_secondary" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
