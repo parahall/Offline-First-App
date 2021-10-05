@@ -1,12 +1,11 @@
-package com.android_academy.custompagination.network.models
+package com.android_academy.network.models
 
-import com.android_academy.custompagination.storage.entities.FilmEntity
-import com.android_academy.custompagination.storage.entities.PersonEntity
-import com.android_academy.custompagination.storage.entities.SpecieEntity
-import com.android_academy.custompagination.storage.entities.StarshipEntity
-import com.android_academy.custompagination.storage.entities.StorageEntity
-import com.android_academy.custompagination.storage.entities.VehicleEntity
-import com.android_academy.custompagination.storage.entities.extractId
+import com.android_academy.storage.entities.FilmEntity
+import com.android_academy.storage.entities.PersonEntity
+import com.android_academy.storage.entities.SpecieEntity
+import com.android_academy.storage.entities.StarshipEntity
+import com.android_academy.storage.entities.StorageEntity
+import com.android_academy.storage.entities.VehicleEntity
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
@@ -256,4 +255,8 @@ data class StarshipResponse(
             starshipClass = starshipClass
         )
     }
+}
+
+fun String.extractId(): Int {
+    return this.split("/").dropLast(1).last().toInt()
 }

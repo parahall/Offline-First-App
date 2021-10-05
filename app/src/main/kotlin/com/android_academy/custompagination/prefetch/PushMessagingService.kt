@@ -1,4 +1,4 @@
-package com.android_academy.custompagination.network
+package com.android_academy.custompagination.prefetch
 
 import com.android_academy.custompagination.StarWarsApp
 import com.android_academy.custompagination.repo.StarWarsRepo

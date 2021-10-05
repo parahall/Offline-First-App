@@ -1,8 +1,8 @@
 package com.android_academy.custompagination.network.di
 
-import com.android_academy.custompagination.network.NetworkSource
-import com.android_academy.custompagination.network.NetworkSourceImpl
-import com.android_academy.custompagination.network.StarWarsApi
+import com.android_academy.network.NetworkSource
+import com.android_academy.network.NetworkSourceImpl
+import com.android_academy.network.StarWarsApi
 import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides

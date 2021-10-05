@@ -1,4 +1,4 @@
-package com.android_academy.custompagination.storage
+package com.android_academy.storage
 
 import androidx.room.Dao
 import androidx.room.Database
@@ -10,17 +10,17 @@ import androidx.room.RoomDatabase
 import androidx.room.Transaction
 import androidx.room.TypeConverter
 import androidx.room.TypeConverters
-import com.android_academy.custompagination.storage.entities.EnrichedPersonEntity
-import com.android_academy.custompagination.storage.entities.FavoritePersonEntity
-import com.android_academy.custompagination.storage.entities.FilmEntity
-import com.android_academy.custompagination.storage.entities.PersonEntity
-import com.android_academy.custompagination.storage.entities.PersonFilmsCrossRef
-import com.android_academy.custompagination.storage.entities.PersonSpecieCrossRef
-import com.android_academy.custompagination.storage.entities.PersonStarshipCrossRef
-import com.android_academy.custompagination.storage.entities.PersonVehicleCrossRef
-import com.android_academy.custompagination.storage.entities.SpecieEntity
-import com.android_academy.custompagination.storage.entities.StarshipEntity
-import com.android_academy.custompagination.storage.entities.VehicleEntity
+import com.android_academy.storage.entities.EnrichedPersonEntity
+import com.android_academy.storage.entities.FavoritePersonEntity
+import com.android_academy.storage.entities.FilmEntity
+import com.android_academy.storage.entities.PersonEntity
+import com.android_academy.storage.entities.PersonFilmsCrossRef
+import com.android_academy.storage.entities.PersonSpecieCrossRef
+import com.android_academy.storage.entities.PersonStarshipCrossRef
+import com.android_academy.storage.entities.PersonVehicleCrossRef
+import com.android_academy.storage.entities.SpecieEntity
+import com.android_academy.storage.entities.StarshipEntity
+import com.android_academy.storage.entities.VehicleEntity
 import kotlinx.coroutines.flow.Flow
 
 @Database(

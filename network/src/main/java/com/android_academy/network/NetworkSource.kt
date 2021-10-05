@@ -1,11 +1,11 @@
-package com.android_academy.custompagination.network
+package com.android_academy.network
 
-import com.android_academy.custompagination.network.models.FilmResponse
-import com.android_academy.custompagination.network.models.PagedResponse
-import com.android_academy.custompagination.network.models.PersonResponse
-import com.android_academy.custompagination.network.models.SpecieResponse
-import com.android_academy.custompagination.network.models.StarshipResponse
-import com.android_academy.custompagination.network.models.VehicleResponse
+import com.android_academy.network.models.FilmResponse
+import com.android_academy.network.models.PagedResponse
+import com.android_academy.network.models.PersonResponse
+import com.android_academy.network.models.SpecieResponse
+import com.android_academy.network.models.StarshipResponse
+import com.android_academy.network.models.VehicleResponse
 import retrofit2.Response
 
 interface NetworkSource {

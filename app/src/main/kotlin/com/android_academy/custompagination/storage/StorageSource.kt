@@ -1,15 +1,16 @@
 package com.android_academy.custompagination.storage
 
-import com.android_academy.custompagination.storage.entities.EnrichedPersonEntity
-import com.android_academy.custompagination.storage.entities.FilmEntity
-import com.android_academy.custompagination.storage.entities.PersonEntity
-import com.android_academy.custompagination.storage.entities.PersonFilmsCrossRef
-import com.android_academy.custompagination.storage.entities.PersonSpecieCrossRef
-import com.android_academy.custompagination.storage.entities.PersonStarshipCrossRef
-import com.android_academy.custompagination.storage.entities.PersonVehicleCrossRef
-import com.android_academy.custompagination.storage.entities.SpecieEntity
-import com.android_academy.custompagination.storage.entities.StarshipEntity
-import com.android_academy.custompagination.storage.entities.VehicleEntity
+import com.android_academy.storage.StarWarsDb
+import com.android_academy.storage.entities.EnrichedPersonEntity
+import com.android_academy.storage.entities.FilmEntity
+import com.android_academy.storage.entities.PersonEntity
+import com.android_academy.storage.entities.PersonFilmsCrossRef
+import com.android_academy.storage.entities.PersonSpecieCrossRef
+import com.android_academy.storage.entities.PersonStarshipCrossRef
+import com.android_academy.storage.entities.PersonVehicleCrossRef
+import com.android_academy.storage.entities.SpecieEntity
+import com.android_academy.storage.entities.StarshipEntity
+import com.android_academy.storage.entities.VehicleEntity
 import kotlinx.coroutines.flow.Flow
 
 interface StorageSource {

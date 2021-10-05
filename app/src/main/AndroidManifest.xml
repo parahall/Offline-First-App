@@ -25,7 +25,7 @@
         </activity>
 
         <service
-            android:name=".network.PushMessagingService"
+            android:name=".prefetch.PushMessagingService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />

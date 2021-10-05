@@ -1,4 +1,4 @@
-package com.android_academy.custompagination.storage.entities
+package com.android_academy.storage.entities
 
 import androidx.room.ColumnInfo
 import androidx.room.Embedded
@@ -6,13 +6,8 @@ import androidx.room.Entity
 import androidx.room.Junction
 import androidx.room.PrimaryKey
 import androidx.room.Relation
-import com.android_academy.custompagination.models.Film
-import com.android_academy.custompagination.models.Person
-import com.android_academy.custompagination.models.Specie
-import com.android_academy.custompagination.models.Starship
-import com.android_academy.custompagination.models.Vehicle
 
-open class StorageEntity
+sealed class StorageEntity
 
 
 data class EnrichedPersonEntity(
@@ -94,29 +89,6 @@ data class PersonStarshipCrossRef(
     val starshipId: Int
 )
 
-fun EnrichedPersonEntity.toPerson(): Person {
-    return Person(
-        personEntity.personId,
-        personEntity.name,
-        personEntity.height,
-        personEntity.mass,
-        personEntity.hairColor,
-        personEntity.skinColor,
-        personEntity.eyeColor,
-        personEntity.birthYear,
-        personEntity.gender,
-        personEntity.homeWorld,
-        films.map { it.toModel() },
-        species.map { it.toModel() },
-        vehicles.map { it.toModel() },
-        starships.map { it.toModel() },
-        personEntity.created,
-        personEntity.edited,
-        personEntity.url,
-        favoriteProps?.isFavorite ?: false
-    )
-}
-
 @Entity(tableName = "people_table")
 data class PersonEntity(
     @PrimaryKey
@@ -175,21 +147,6 @@ data class FilmEntity(
     val url: String,
 ) : StorageEntity()
 
-fun FilmEntity.toModel(): Film {
-    return Film(
-        id = filmId,
-        created = created,
-        director = director,
-        edited = edited,
-        episode_id = episodeId,
-        openingCrawl = openingCrawl,
-        producer = producer,
-        releaseDate = releaseDate,
-        title = title,
-        url = url,
-    )
-}
-
 @Entity(tableName = "specie_table")
 data class SpecieEntity(
     @PrimaryKey
@@ -215,25 +172,6 @@ data class SpecieEntity(
     val url: String
 ) : StorageEntity()
 
-fun SpecieEntity.toModel(): Specie {
-    return Specie(
-        id = specieId,
-        averageHeight = averageHeight,
-        averageLifespan = averageLifespan,
-        classification = classification,
-        created = created,
-        designation = designation,
-        edited = edited,
-        eye_colors = eye_colors,
-        hairColors = hairColors,
-        homeWorld = homeWorld,
-        language = language,
-        name = name,
-        skinColors = skinColors,
-        url = url
-    )
-}
-
 @Entity(tableName = "vehicle_table")
 data class VehicleEntity(
     @PrimaryKey
@@ -258,27 +196,6 @@ data class VehicleEntity(
     @ColumnInfo(name = "vehicle_class")
     val vehicleClass: String
 ) : StorageEntity()
-
-fun VehicleEntity.toModel(): Vehicle {
-    return Vehicle(
-        id = vehicleId,
-        cargoCapacity = cargoCapacity,
-        consumables = consumables,
-        costInCredits = costInCredits,
-        created = created,
-        crew = crew,
-        edited = edited,
-        length = length,
-        manufacturer = manufacturer,
-        maxAtmosphericSpeed = maxAtmosphericSpeed,
-        model = model,
-        name = name,
-        passengers = passengers,
-        url = url,
-        vehicleClass = vehicleClass
-
-    )
-}
 
 @Entity(tableName = "starship_table")
 data class StarshipEntity(
@@ -307,31 +224,3 @@ data class StarshipEntity(
     val starshipClass: String,
     val url: String
 ) : StorageEntity()
-
-
-fun StarshipEntity.toModel(): Starship {
-    return Starship(
-        starshipId,
-        mglt,
-        cargoCapacity,
-        consumables,
-        costInCredits,
-        created,
-        crew,
-        edited,
-        hyperdriveRating,
-        length,
-        manufacturer,
-        maxAtmosphericSpeed,
-        model,
-        name,
-        passengers,
-        starshipClass,
-        url
-    )
-}
-
-
-fun String.extractId(): Int {
-    return this.split("/").dropLast(1).last().toInt()
-}

@@ -15,9 +15,8 @@ object MainFragmentModule {
     @Provides
     fun provideViewModelFactory(
         starWarsRepo: StarWarsRepo,
-        moshi: Moshi,
     ): MainFragmentViewModelFactory {
-        return MainFragmentViewModelFactory(starWarsRepo, moshi)
+        return MainFragmentViewModelFactory(starWarsRepo)
     }
 
     @Provides
