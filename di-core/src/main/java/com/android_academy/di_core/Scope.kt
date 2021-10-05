@@ -1,6 +1,7 @@
-package com.android_academy.custompagination.di
+package com.android_academy.di_core
 
 import javax.inject.Scope
+
 
 @Scope
 @Retention(AnnotationRetention.RUNTIME)

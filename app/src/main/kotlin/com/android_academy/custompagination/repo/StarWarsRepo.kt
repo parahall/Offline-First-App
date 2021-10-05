@@ -2,7 +2,7 @@ package com.android_academy.custompagination.repo
 
 import android.util.Log
 import com.android_academy.custompagination.repo.StarWarsRepo.Companion.TAG
-import com.android_academy.custompagination.storage.StorageSource
+import com.android_academy.storage.StorageSource
 import com.android_academy.custompagination.utils.CacheOnSuccess
 import com.android_academy.network.NetworkSource
 import com.android_academy.network.models.EntityConvertible

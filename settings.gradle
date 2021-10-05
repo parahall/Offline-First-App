@@ -10,3 +10,5 @@ rootProject.name = "CustomPagination"
 include ':app'
 include ':network'
 include ':storage'
+include ':di-core'
+include ':di-core'

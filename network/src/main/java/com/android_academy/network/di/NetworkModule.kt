@@ -1,4 +1,4 @@
-package com.android_academy.custompagination.network.di
+package com.android_academy.network.di
 
 import com.android_academy.network.NetworkSource
 import com.android_academy.network.NetworkSourceImpl

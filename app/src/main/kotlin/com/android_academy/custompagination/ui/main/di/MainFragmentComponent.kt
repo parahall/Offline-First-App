@@ -1,7 +1,7 @@
 package com.android_academy.custompagination.ui.main.di
 
-import com.android_academy.custompagination.di.FragmentScope
 import com.android_academy.custompagination.ui.main.MainFragment
+import com.android_academy.di_core.FragmentScope
 import dagger.BindsInstance
 import dagger.Subcomponent
 

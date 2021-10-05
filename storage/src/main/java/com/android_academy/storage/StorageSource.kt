@@ -1,6 +1,5 @@
-package com.android_academy.custompagination.storage
+package com.android_academy.storage
 
-import com.android_academy.storage.StarWarsDb
 import com.android_academy.storage.entities.EnrichedPersonEntity
 import com.android_academy.storage.entities.FilmEntity
 import com.android_academy.storage.entities.PersonEntity

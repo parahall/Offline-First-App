@@ -1,11 +1,11 @@
-package com.android_academy.custompagination.storage.di
+package com.android_academy.storage.di
 
 import android.content.Context
 import androidx.room.Room
-import com.android_academy.custompagination.di.ApplicationScope
-import com.android_academy.custompagination.storage.StorageSource
-import com.android_academy.custompagination.storage.StorageSourceImpl
+import com.android_academy.di_core.ApplicationScope
 import com.android_academy.storage.StarWarsDb
+import com.android_academy.storage.StorageSource
+import com.android_academy.storage.StorageSourceImpl
 import dagger.Module
 import dagger.Provides
 

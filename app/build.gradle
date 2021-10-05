@@ -38,6 +38,7 @@ dependencies {
     implementation project(path: ':network')
     implementation project(path: ':storage')
     implementation 'com.google.firebase:firebase-messaging-ktx:21.0.1'
+    implementation project(path: ':di-core')
     testImplementation 'junit:junit:4.12'
     def room_version = "2.3.0"
     implementation("androidx.room:room-runtime:$room_version")
