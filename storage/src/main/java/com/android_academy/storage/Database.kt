@@ -53,9 +53,10 @@ abstract class StarWarsDb : RoomDatabase() {
 @Dao
 interface FavoritesDao {
     @Transaction
-    fun toggleFavorites(personId: Int) {
+    fun toggleFavorites(personId: Int) : Boolean {
         val isFavor = getFavoriteStatus(personId) ?: false
         insert(FavoritePersonEntity(personId, !isFavor))
+        return !isFavor
     }
 
     @Query("SELECT is_favorite FROM favorite_people_table WHERE person_id = :personId")

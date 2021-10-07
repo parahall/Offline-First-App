@@ -24,7 +24,7 @@ interface StorageSource {
     fun storePeopleSpecieRef(entities: List<PersonSpecieCrossRef>)
     fun storePeopleStarshipRef(entities: List<PersonStarshipCrossRef>)
     fun storePeopleVehicleRef(entities: List<PersonVehicleCrossRef>)
-    suspend fun toggleFavoriteState(personId: Int)
+    suspend fun toggleFavoriteState(personId: Int) : Boolean
 }
 
 class StorageSourceImpl(private val db: StarWarsDb) : StorageSource {
@@ -69,8 +69,8 @@ class StorageSourceImpl(private val db: StarWarsDb) : StorageSource {
         db.enrichedDao().insertAll(*entities.toTypedArray())
     }
 
-    override suspend fun toggleFavoriteState(personId: Int) {
-        db.favoritesDao().toggleFavorites(personId)
+    override suspend fun toggleFavoriteState(personId: Int) : Boolean {
+        return db.favoritesDao().toggleFavorites(personId)
     }
 
     override fun storePeopleStarshipRef(entities: List<PersonStarshipCrossRef>) {
