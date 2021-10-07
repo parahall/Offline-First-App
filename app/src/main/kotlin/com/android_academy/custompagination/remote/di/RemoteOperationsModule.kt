@@ -7,7 +7,6 @@ import com.android_academy.custompagination.remote.RemotePersistenceSource
 import com.android_academy.custompagination.remote.RemotePersistenceSourceImpl
 import com.android_academy.custompagination.remote.RemoteService
 import com.android_academy.custompagination.remote.RemoteServiceImpl
-import com.android_academy.custompagination.remote.operations.RemoteOperationType
 import com.android_academy.custompagination.remote.operations.StarWarsOperationType
 import com.android_academy.custompagination.remote.operations.toggle_favorite_person.FavoriteStatusRemoteOperation
 import com.android_academy.custompagination.remote.operations.toggle_favorite_person.ToggleFavoritePersonFailureHandler
