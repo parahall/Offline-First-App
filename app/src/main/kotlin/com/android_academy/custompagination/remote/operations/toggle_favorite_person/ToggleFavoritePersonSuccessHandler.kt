@@ -1,0 +1,4 @@
+package com.android_academy.custompagination.remote.operations.toggle_favorite_person
+
+class ToggleFavoritePersonSuccessHandler {
+}

@@ -1,6 +1,7 @@
-package com.android_academy.custompagination.remote.models
+package com.android_academy.custompagination.remote.operations
 
-import java.util.*
+import com.android_academy.custompagination.remote.models.RemoteCurrentData
+import java.util.Locale
 
 interface RemoteOperation {
     val identifier: RemoteOperationType
@@ -12,9 +13,8 @@ interface RemoteOperationType {
     fun getName(): String
 }
 
-interface RemoteCurrentData
 
-enum class StarWarsOperationType(override val id: Int): RemoteOperationType {
+enum class StarWarsOperationType(override val id: Int) : RemoteOperationType {
     CHANGE_FAVORITE_PERSON_STATUS(1)
     ;
 
@@ -26,13 +26,4 @@ enum class StarWarsOperationType(override val id: Int): RemoteOperationType {
         }
     }
 }
-
-data class FavoriteStatusRemoteOperation(
-    val personId: Int,
-    val isFavor: Boolean
-): RemoteOperation {
-    override val identifier = StarWarsOperationType.CHANGE_FAVORITE_PERSON_STATUS
-    override val remoteCurrentData: RemoteCurrentData? = null
-}
-
 
