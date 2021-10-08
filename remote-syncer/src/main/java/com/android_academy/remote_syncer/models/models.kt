@@ -1,6 +1,7 @@
 package com.android_academy.remote_syncer.models
 
 import com.android_academy.remote_syncer.operations.RemoteOperationType
+import com.android_academy.remote_syncer.operations.StarWarsOperationType
 import com.android_academy.storage.entities.PersistedRemoteDataEntity
 import java.util.Date
 
@@ -21,8 +22,24 @@ data class RemoteData(
 fun RemoteData.toPersistedRemoteDataEntity(): PersistedRemoteDataEntity {
     return PersistedRemoteDataEntity(
         timestamp = timestamp,
-        type = id.toInt(),
+        typeId = type.id,
         syncStatus = syncStatus.name,
+        data = data,
+        metadata = metadata,
+    ).apply {
+        id = this@toPersistedRemoteDataEntity.id
+    }
+}
+
+fun PersistedRemoteDataEntity.toRemoteData(): RemoteData {
+    val type = StarWarsOperationType.fromId(typeId) ?: run {
+        throw Throwable("Invalid stored data. Not existing type for typeId: $typeId")
+    }
+    return RemoteData(
+        id = id,
+        timestamp = timestamp,
+        type = type,
+        syncStatus = SyncStatus.fromName(syncStatus) ?: SyncStatus.NEW,
         data = data,
         metadata = metadata
     )

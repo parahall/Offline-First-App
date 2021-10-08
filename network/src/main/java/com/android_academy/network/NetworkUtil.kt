@@ -14,7 +14,7 @@ suspend fun <T> safeResultApiCall(
         myObject.getValidatedBody()?.let { value ->
             Result.success(value)
         } ?: run {
-            val throwable = NetworkThrowable("Network error: ${myObject.code()}")
+            val throwable = NetworkThrowable("Network error: ${myObject.code()}", myObject.code())
             Result.failure<T>(
                 exception = throwable
             )
@@ -36,4 +36,4 @@ fun <T> Response<T>?.getValidatedBody(): T? {
 }
 
 
-class NetworkThrowable(override val message: String?) : Throwable(message)
+class NetworkThrowable(override val message: String?, val errorCode: Int?) : Throwable(message)

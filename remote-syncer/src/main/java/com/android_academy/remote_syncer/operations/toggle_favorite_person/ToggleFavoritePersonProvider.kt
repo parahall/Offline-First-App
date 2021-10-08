@@ -7,12 +7,12 @@ import com.android_academy.remote_syncer.provider.IOperationParser
 import com.android_academy.remote_syncer.ISuccessHandler
 
 class ToggleFavoritePersonProvider(
-    private val parser: IOperationParser<FavoriteStatusRemoteOperation>,
-    private val operationHandler: IOperationHandler<FavoriteStatusRemoteOperation, ToggleFavoritePersonResponse>,
-    private val failureHandler: IFailureHandler<FavoriteStatusRemoteOperation>,
-    private val successHandler: ISuccessHandler<FavoriteStatusRemoteOperation, ToggleFavoritePersonResponse>
+    private val parser: IOperationParser<FavoriteRemoteOperation>,
+    private val operationHandler: IOperationHandler<FavoriteRemoteOperation, FavoritePersonResponse>,
+    private val failureHandler: IFailureHandler<FavoriteRemoteOperation>,
+    private val successHandler: ISuccessHandler<FavoriteRemoteOperation, FavoritePersonResponse>
 ) :
-    RemoteOperationProvider<FavoriteStatusRemoteOperation, ToggleFavoritePersonResponse> {
+    RemoteOperationProvider<FavoriteRemoteOperation, FavoritePersonResponse> {
     override fun provideParser() = parser
 
     override fun providerOperationHandler() = operationHandler

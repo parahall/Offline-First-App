@@ -39,4 +39,6 @@ interface StarWarsApi {
 
     @GET("starships/{id}/")
     suspend fun getStarship(@Path("id") specieId: String): Response<StarshipResponse>
+
+    suspend fun markPersonFavorite(personId: Int, favor: Boolean) : Response<Unit>
 }

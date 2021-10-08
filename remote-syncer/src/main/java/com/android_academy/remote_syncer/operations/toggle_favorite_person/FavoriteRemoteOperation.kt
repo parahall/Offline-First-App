@@ -7,7 +7,7 @@ import com.android_academy.remote_syncer.operations.StarWarsOperationType
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class FavoriteStatusRemoteOperation(
+data class FavoriteRemoteOperation(
     val personId: Int,
     val isFavor: Boolean
 ) : RemoteOperation {
@@ -15,4 +15,4 @@ data class FavoriteStatusRemoteOperation(
     override val remoteCurrentData: RemoteCurrentData? = null
 }
 
-object ToggleFavoritePersonResponse : RemoteResponse
+object FavoritePersonResponse : RemoteResponse

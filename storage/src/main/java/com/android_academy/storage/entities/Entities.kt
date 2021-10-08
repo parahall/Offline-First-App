@@ -234,7 +234,7 @@ data class PersistedRemoteDataEntity(
     @ColumnInfo(name = "timestamp")
     val timestamp: Date,
     @ColumnInfo(name = "type")
-    val type: Int,
+    val typeId: Int,
     @ColumnInfo(name = "sync_status")
     val syncStatus: String,
     @ColumnInfo(name = "data")

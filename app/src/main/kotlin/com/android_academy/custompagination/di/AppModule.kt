@@ -2,6 +2,8 @@ package com.android_academy.custompagination.di
 
 import android.app.Application
 import android.content.Context
+import androidx.work.Configuration
+import androidx.work.WorkManager
 import com.android_academy.di_core.ApplicationScope
 import dagger.Module
 import dagger.Provides
@@ -13,6 +15,15 @@ class AppModule(private val application: Application) {
     @ApplicationScope
     fun provideContext(): Context {
         return application.applicationContext
+    }
+
+    @Provides
+    @ApplicationScope
+    fun provideWorkManager(context: Context): WorkManager {
+        val config = Configuration.Builder()
+            .build()
+        WorkManager.initialize(context, config)
+        return WorkManager.getInstance(context)
     }
 
 }

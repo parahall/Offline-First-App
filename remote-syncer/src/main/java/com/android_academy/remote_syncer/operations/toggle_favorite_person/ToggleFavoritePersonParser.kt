@@ -4,14 +4,14 @@ import com.android_academy.remote_syncer.provider.IOperationParser
 import com.squareup.moshi.Moshi
 
 class ToggleFavoritePersonParser(private val moshi: Moshi) :
-    IOperationParser<FavoriteStatusRemoteOperation>() {
-    override fun toJsonActual(operation: FavoriteStatusRemoteOperation): String? {
-        val adapter = moshi.adapter(FavoriteStatusRemoteOperation::class.java)
+    IOperationParser<FavoriteRemoteOperation>() {
+    override fun toJsonActual(operation: FavoriteRemoteOperation): String? {
+        val adapter = moshi.adapter(FavoriteRemoteOperation::class.java)
         return adapter.toJson(operation)
     }
 
-    override fun fromJson(json: String): FavoriteStatusRemoteOperation? {
-        val adapter = moshi.adapter(FavoriteStatusRemoteOperation::class.java)
+    override fun fromJson(json: String): FavoriteRemoteOperation? {
+        val adapter = moshi.adapter(FavoriteRemoteOperation::class.java)
         return adapter.fromJson(json)
     }
 }

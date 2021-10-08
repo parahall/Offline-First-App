@@ -28,9 +28,11 @@ dependencies {
 
     implementation project(path: ':network')
     implementation project(path: ':storage')
+    implementation 'androidx.work:work-runtime-ktx:2.6.0'
 
     kapt 'com.squareup.moshi:moshi-kotlin-codegen:1.12.0'
 
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2'
     implementation 'com.google.dagger:dagger:2.38.1'
     kapt 'com.google.dagger:dagger-compiler:2.38.1'
 

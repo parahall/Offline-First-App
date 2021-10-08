@@ -1,6 +1,7 @@
 package com.android_academy.storage
 
 import com.android_academy.storage.entities.EnrichedPersonEntity
+import com.android_academy.storage.entities.FavoritePersonEntity
 import com.android_academy.storage.entities.FilmEntity
 import com.android_academy.storage.entities.PersonEntity
 import com.android_academy.storage.entities.PersonFilmsCrossRef
@@ -25,6 +26,7 @@ interface StorageSource {
     fun storePeopleStarshipRef(entities: List<PersonStarshipCrossRef>)
     fun storePeopleVehicleRef(entities: List<PersonVehicleCrossRef>)
     suspend fun toggleFavoriteState(personId: Int) : Boolean
+    suspend fun updatePerson(personId: Int, isFavor: Boolean)
 }
 
 class StorageSourceImpl(private val db: StarWarsDb) : StorageSource {
@@ -71,6 +73,10 @@ class StorageSourceImpl(private val db: StarWarsDb) : StorageSource {
 
     override suspend fun toggleFavoriteState(personId: Int) : Boolean {
         return db.favoritesDao().toggleFavorites(personId)
+    }
+
+    override suspend fun updatePerson(personId: Int, isFavor: Boolean) {
+        db.favoritesDao().insert(FavoritePersonEntity(personId, isFavor))
     }
 
     override fun storePeopleStarshipRef(entities: List<PersonStarshipCrossRef>) {

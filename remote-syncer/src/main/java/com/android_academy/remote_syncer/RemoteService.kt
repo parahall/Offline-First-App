@@ -33,7 +33,6 @@ class RemoteServiceImpl(
             data = jsonData,
             metadata = metadata
         )
-
         persistenceSource.store(remoteData)
 
     }

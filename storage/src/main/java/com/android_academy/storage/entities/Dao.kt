@@ -1,10 +1,12 @@
 package com.android_academy.storage.entities
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
+import androidx.room.Update
 import kotlinx.coroutines.flow.Flow
 
 
@@ -12,6 +14,21 @@ import kotlinx.coroutines.flow.Flow
 interface RemoteSyncDataDao {
     @Insert
     suspend fun insert(boardRemoteData: PersistedRemoteDataEntity)
+
+    @Query("SELECT * FROM remote_data ORDER BY timestamp")
+    fun observeData(): Flow<List<PersistedRemoteDataEntity>>
+
+    @Query("SELECT COUNT(*) from remote_data")
+    fun getQueueSize(): Int
+
+    @Delete
+    fun remove(remoteEntity: PersistedRemoteDataEntity)
+
+    @Update
+    fun update(boardRemoteData: PersistedRemoteDataEntity)
+
+    @Query("SELECT * FROM remote_data WHERE ID = :id")
+    fun getRemoteData(id: Long): PersistedRemoteDataEntity?
 }
 
 
