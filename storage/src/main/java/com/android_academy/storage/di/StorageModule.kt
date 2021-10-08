@@ -6,6 +6,7 @@ import com.android_academy.di_core.ApplicationScope
 import com.android_academy.storage.StarWarsDb
 import com.android_academy.storage.StorageSource
 import com.android_academy.storage.StorageSourceImpl
+import com.android_academy.storage.entities.RemoteSyncDataDao
 import dagger.Module
 import dagger.Provides
 
@@ -25,5 +26,10 @@ object StorageModule {
     @Provides
     fun provideStorageSource(db: StarWarsDb): StorageSource {
         return StorageSourceImpl(db)
+    }
+
+    @Provides
+    fun provideRemoteSyncDao(db: StarWarsDb): RemoteSyncDataDao {
+        return db.remoteSyncDataDao()
     }
 }

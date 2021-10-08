@@ -1,10 +1,10 @@
-package com.android_academy.custompagination.remote.operations.toggle_favorite_person
+package com.android_academy.remote_syncer.operations.toggle_favorite_person
 
-import com.android_academy.custompagination.remote.RemoteOperationProvider
-import com.android_academy.custompagination.remote.provider.IFailureHandler
-import com.android_academy.custompagination.remote.provider.IOperationHandler
-import com.android_academy.custompagination.remote.provider.IOperationParser
-import com.android_academy.custompagination.remote.provider.ISuccessHandler
+import com.android_academy.remote_syncer.provider.RemoteOperationProvider
+import com.android_academy.remote_syncer.provider.IFailureHandler
+import com.android_academy.remote_syncer.provider.IOperationHandler
+import com.android_academy.remote_syncer.provider.IOperationParser
+import com.android_academy.remote_syncer.ISuccessHandler
 
 class ToggleFavoritePersonProvider(
     private val parser: IOperationParser<FavoriteStatusRemoteOperation>,

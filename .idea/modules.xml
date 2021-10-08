@@ -6,6 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/CustomPagination.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/CustomPagination.app.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/di-core/CustomPagination.di-core.iml" filepath="$PROJECT_DIR$/.idea/modules/di-core/CustomPagination.di-core.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/network/CustomPagination.network.iml" filepath="$PROJECT_DIR$/.idea/modules/network/CustomPagination.network.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/remote-syncer/CustomPagination.remote-syncer.iml" filepath="$PROJECT_DIR$/.idea/modules/remote-syncer/CustomPagination.remote-syncer.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/storage/CustomPagination.storage.iml" filepath="$PROJECT_DIR$/.idea/modules/storage/CustomPagination.storage.iml" />
     </modules>
   </component>

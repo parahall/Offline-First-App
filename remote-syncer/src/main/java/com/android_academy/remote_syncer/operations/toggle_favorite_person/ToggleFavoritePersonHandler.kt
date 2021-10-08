@@ -1,8 +1,8 @@
-package com.android_academy.custompagination.remote.operations.toggle_favorite_person
+package com.android_academy.remote_syncer.operations.toggle_favorite_person
 
-import com.android_academy.custompagination.remote.provider.IOperationHandler
+import com.android_academy.remote_syncer.provider.IOperationHandler
 
-class ToggleFavoritePersonHandler() :
+class ToggleFavoritePersonHandler :
     IOperationHandler<FavoriteStatusRemoteOperation, ToggleFavoritePersonResponse>() {
     override suspend fun executeActual(action: FavoriteStatusRemoteOperation): Result<ToggleFavoritePersonResponse> {
         TODO("Not yet implemented")

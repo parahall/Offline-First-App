@@ -1,8 +1,8 @@
-package com.android_academy.custompagination.remote.provider
+package com.android_academy.remote_syncer.provider
 
 import android.util.Log
-import com.android_academy.custompagination.remote.models.RemoteResponse
-import com.android_academy.custompagination.remote.operations.RemoteOperation
+import com.android_academy.remote_syncer.operations.RemoteOperation
+import com.android_academy.remote_syncer.models.RemoteResponse
 
 abstract class IOperationHandler<T : RemoteOperation, R : RemoteResponse> {
 

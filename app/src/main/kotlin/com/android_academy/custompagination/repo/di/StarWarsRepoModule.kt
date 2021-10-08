@@ -1,6 +1,6 @@
 package com.android_academy.custompagination.repo.di
 
-import com.android_academy.custompagination.remote.RemoteService
+import com.android_academy.remote_syncer.RemoteService
 import com.android_academy.custompagination.repo.StarWarsRepo
 import com.android_academy.custompagination.repo.StarWarsRepoImpl
 import com.android_academy.network.NetworkSource

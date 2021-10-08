@@ -1,24 +1,25 @@
-package com.android_academy.custompagination.remote.di
+package com.android_academy.remote_syncer.di
 
-import com.android_academy.custompagination.remote.RemoteOperationMapper
-import com.android_academy.custompagination.remote.RemoteOperationMapperImpl
-import com.android_academy.custompagination.remote.RemoteOperationProvider
-import com.android_academy.custompagination.remote.RemotePersistenceSource
-import com.android_academy.custompagination.remote.RemotePersistenceSourceImpl
-import com.android_academy.custompagination.remote.RemoteService
-import com.android_academy.custompagination.remote.RemoteServiceImpl
-import com.android_academy.custompagination.remote.operations.StarWarsOperationType
-import com.android_academy.custompagination.remote.operations.toggle_favorite_person.FavoriteStatusRemoteOperation
-import com.android_academy.custompagination.remote.operations.toggle_favorite_person.ToggleFavoritePersonFailureHandler
-import com.android_academy.custompagination.remote.operations.toggle_favorite_person.ToggleFavoritePersonHandler
-import com.android_academy.custompagination.remote.operations.toggle_favorite_person.ToggleFavoritePersonParser
-import com.android_academy.custompagination.remote.operations.toggle_favorite_person.ToggleFavoritePersonProvider
-import com.android_academy.custompagination.remote.operations.toggle_favorite_person.ToggleFavoritePersonResponse
-import com.android_academy.custompagination.remote.provider.EmptySuccessHandler
-import com.android_academy.custompagination.remote.provider.IFailureHandler
-import com.android_academy.custompagination.remote.provider.IOperationHandler
-import com.android_academy.custompagination.remote.provider.IOperationParser
-import com.android_academy.custompagination.remote.provider.ISuccessHandler
+import com.android_academy.remote_syncer.EmptySuccessHandler
+import com.android_academy.remote_syncer.ISuccessHandler
+import com.android_academy.remote_syncer.RemotePersistenceSource
+import com.android_academy.remote_syncer.RemotePersistenceSourceImpl
+import com.android_academy.remote_syncer.RemoteService
+import com.android_academy.remote_syncer.RemoteServiceImpl
+import com.android_academy.remote_syncer.operations.StarWarsOperationType
+import com.android_academy.remote_syncer.operations.toggle_favorite_person.FavoriteStatusRemoteOperation
+import com.android_academy.remote_syncer.operations.toggle_favorite_person.ToggleFavoritePersonFailureHandler
+import com.android_academy.remote_syncer.operations.toggle_favorite_person.ToggleFavoritePersonHandler
+import com.android_academy.remote_syncer.operations.toggle_favorite_person.ToggleFavoritePersonParser
+import com.android_academy.remote_syncer.operations.toggle_favorite_person.ToggleFavoritePersonProvider
+import com.android_academy.remote_syncer.operations.toggle_favorite_person.ToggleFavoritePersonResponse
+import com.android_academy.remote_syncer.provider.IFailureHandler
+import com.android_academy.remote_syncer.provider.IOperationHandler
+import com.android_academy.remote_syncer.provider.IOperationParser
+import com.android_academy.remote_syncer.provider.RemoteOperationMapper
+import com.android_academy.remote_syncer.provider.RemoteOperationMapperImpl
+import com.android_academy.remote_syncer.provider.RemoteOperationProvider
+import com.android_academy.storage.entities.RemoteSyncDataDao
 import com.squareup.moshi.Moshi
 import dagger.MapKey
 import dagger.Module
@@ -32,8 +33,8 @@ annotation class StarWarsOperationTypeKey(val value: StarWarsOperationType)
 class RemoteOperationsModule {
 
     @Provides
-    fun providePersistenceSource(): RemotePersistenceSource {
-        return RemotePersistenceSourceImpl()
+    fun providePersistenceSource(remoteSyncDataDao: RemoteSyncDataDao): RemotePersistenceSource {
+        return RemotePersistenceSourceImpl(remoteSyncDataDao = remoteSyncDataDao)
     }
 
     @Provides

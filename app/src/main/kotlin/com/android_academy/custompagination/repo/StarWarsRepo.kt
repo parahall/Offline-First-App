@@ -1,8 +1,8 @@
 package com.android_academy.custompagination.repo
 
 import android.util.Log
-import com.android_academy.custompagination.remote.RemoteService
-import com.android_academy.custompagination.remote.operations.toggle_favorite_person.FavoriteStatusRemoteOperation
+import com.android_academy.remote_syncer.RemoteService
+import com.android_academy.remote_syncer.operations.toggle_favorite_person.FavoriteStatusRemoteOperation
 import com.android_academy.custompagination.repo.StarWarsRepo.Companion.TAG
 import com.android_academy.custompagination.utils.CacheOnSuccess
 import com.android_academy.network.NetworkSource

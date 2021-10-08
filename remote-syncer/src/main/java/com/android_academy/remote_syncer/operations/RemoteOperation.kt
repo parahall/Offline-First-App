@@ -1,6 +1,6 @@
-package com.android_academy.custompagination.remote.operations
+package com.android_academy.remote_syncer.operations
 
-import com.android_academy.custompagination.remote.models.RemoteCurrentData
+import com.android_academy.remote_syncer.models.RemoteCurrentData
 import java.util.Locale
 
 interface RemoteOperation {
