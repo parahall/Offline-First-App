@@ -18,7 +18,7 @@ interface RemoteSyncDataDao {
     @Query("SELECT * FROM remote_data ORDER BY timestamp")
     fun observeData(): Flow<List<PersistedRemoteDataEntity>>
 
-    @Query("SELECT COUNT(*) from remote_data")
+    @Query("SELECT COUNT(*) from remote_data WHERE sync_status != \"NEW\"")
     fun getQueueSize(): Int
 
     @Delete

@@ -25,7 +25,10 @@ class SyncServiceImpl(
 ) : SyncService {
 
     override suspend fun sync(id: RemoteDataId, runAttemptCount: Int): ListenableWorker.Result {
-        Log.d(TAG, "[SyncService], sync(): syncing remote data. id - $id")
+        Log.d(
+            TAG,
+            "[SyncService], sync(): syncing remote data. id - $id, runAttempt: $runAttemptCount"
+        )
 
         val remoteData = persistentSource.getRemoteData(id)?.copy(
             syncStatus = SyncStatus.EXECUTING
@@ -85,7 +88,7 @@ class SyncServiceImpl(
     ): ListenableWorker.Result {
         val isLastAttempt = runAttemptCount >= MAX_ATTEMPTS
         Log.e(TAG, "onCurrentRunFailure", throwable)
-        if(remoteData == null || provider == null) return ListenableWorker.Result.failure()
+        if (remoteData == null || provider == null) return ListenableWorker.Result.failure()
 
         return if (isLastAttempt) {
             onFinalFailure(throwable, remoteData, provider)
@@ -101,7 +104,7 @@ class SyncServiceImpl(
         remoteData: RemoteData,
         provider: RemoteOperationProvider<*, *>
     ) {
-        Log.d(TAG,"onFinalFailure(): remote data id - ${remoteData.id}")
+        Log.d(TAG, "onFinalFailure(): remote data id - ${remoteData.id}")
         val operation = provider.provideParser().fromJson(remoteData.data) ?: return
 
         provider.provideFailureHandler().executeOnFailure(operation, throwable)

@@ -26,7 +26,8 @@ object Converters {
     @TypeConverter
     @JvmStatic
     fun stringToMap(value: String?): Map<String, String>? {
-        return value?.split(",")?.associate {
+        if(value.isNullOrBlank()) return null
+        return value.split(",").associate {
             val (left, right) = it.split("=")
             left to right
         }

@@ -8,6 +8,7 @@ import com.android_academy.network.models.StarshipResponse
 import com.android_academy.network.models.VehicleResponse
 import retrofit2.Response
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -40,5 +41,6 @@ interface StarWarsApi {
     @GET("starships/{id}/")
     suspend fun getStarship(@Path("id") specieId: String): Response<StarshipResponse>
 
-    suspend fun markPersonFavorite(personId: Int, favor: Boolean) : Response<Unit>
+    @POST("person/{id}/")
+    suspend fun markPersonFavorite(@Path("id") personId: Int,@Query("is_favor") favor: Boolean) : Response<Unit>
 }

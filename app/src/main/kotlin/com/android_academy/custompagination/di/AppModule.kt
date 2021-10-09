@@ -20,9 +20,6 @@ class AppModule(private val application: Application) {
     @Provides
     @ApplicationScope
     fun provideWorkManager(context: Context): WorkManager {
-        val config = Configuration.Builder()
-            .build()
-        WorkManager.initialize(context, config)
         return WorkManager.getInstance(context)
     }
 

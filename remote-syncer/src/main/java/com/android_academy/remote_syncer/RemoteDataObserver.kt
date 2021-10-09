@@ -88,22 +88,24 @@ class RemoteDataObserverImpl(
     ) {
         Log.e(TAG, "[RemoteDataObserver], sync failure", throwable)
 
-        val shouldAddToQueue = shouldAddToQueue(throwable)
+//        val shouldAddToQueue = shouldAddToQueue(throwable)
 
-        if (shouldAddToQueue) {
-            Log.d(TAG, "[RemoteDataObserver], handleFailure(): Adding operation to queue")
-            remoteScheduler.schedule(remoteData)
-        } else {
-            Log.e(
-                TAG,
-                "handleFailure: Remote operation failed. " +
-                        "operation_type ${remoteData.type.getName()}," +
-                        " data ${remoteData.data}," +
-                        " stack_trace: ${throwable?.stackTraceToString()}"
-            )
-            provider.provideFailureHandler().executeOnFailure(operation, throwable)
-            persistenceSource.remove(remoteData)
-        }
+//        if (shouldAddToQueue) {
+//            Log.d(TAG, "[RemoteDataObserver], handleFailure(): Adding operation to queue")
+//
+//        } else {
+//            Log.e(
+//                TAG,
+//                "handleFailure: Remote operation failed. " +
+//                        "operation_type ${remoteData.type.getName()}," +
+//                        " data ${remoteData.data}," +
+//                        " stack_trace: ${throwable?.stackTraceToString()}"
+//            )
+//            provider.provideFailureHandler().executeOnFailure(operation, throwable)
+//            persistenceSource.remove(remoteData)
+//        }
+
+        remoteScheduler.schedule(remoteData)
     }
 
     private fun shouldAddToQueue(throwable: Throwable?): Boolean {

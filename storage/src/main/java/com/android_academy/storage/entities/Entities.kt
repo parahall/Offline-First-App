@@ -240,7 +240,7 @@ data class PersistedRemoteDataEntity(
     @ColumnInfo(name = "data")
     val data: String,
     @ColumnInfo(name = "metadata")
-    val metadata: Map<String, String>
+    val metadata: Map<String, String>?
 ) {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")

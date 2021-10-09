@@ -16,7 +16,7 @@ data class RemoteData(
     val type: RemoteOperationType,
     val syncStatus: SyncStatus,
     val data: String,
-    val metadata: Map<String, String>
+    val metadata: Map<String, String>?
 )
 
 fun RemoteData.toPersistedRemoteDataEntity(): PersistedRemoteDataEntity {

@@ -37,7 +37,7 @@ import com.android_academy.storage.entities.VehicleEntity
         FavoritePersonEntity::class,
         PersistedRemoteDataEntity::class,
     ],
-    version = 4,
+    version = 5,
     exportSchema = false
 )
 @TypeConverters(Converters::class)
