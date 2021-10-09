@@ -1,12 +1,14 @@
 package com.android_academy.custompagination.repo
 
 import android.util.Log
+import com.android_academy.remote_syncer.RemoteService
+import com.android_academy.remote_syncer.operations.toggle_favorite_person.FavoriteRemoteOperation
 import com.android_academy.custompagination.repo.StarWarsRepo.Companion.TAG
-import com.android_academy.storage.StorageSource
 import com.android_academy.custompagination.utils.CacheOnSuccess
 import com.android_academy.network.NetworkSource
 import com.android_academy.network.models.EntityConvertible
 import com.android_academy.network.models.PagedResponse
+import com.android_academy.storage.StorageSource
 import com.android_academy.storage.entities.EnrichedPersonEntity
 import com.android_academy.storage.entities.FilmEntity
 import com.android_academy.storage.entities.PersonEntity
@@ -42,6 +44,7 @@ interface StarWarsRepo {
 class StarWarsRepoImpl(
     private val storageSource: StorageSource,
     private val networkSource: NetworkSource,
+    private val remoteService: RemoteService,
 ) : StarWarsRepo {
 
 
@@ -63,7 +66,8 @@ class StarWarsRepoImpl(
     }
 
     override suspend fun toggleFavoriteState(personId: Int) {
-        storageSource.toggleFavoriteState(personId)
+        val isFavor = storageSource.toggleFavoriteState(personId)
+        remoteService.performRemoteOperation(FavoriteRemoteOperation(personId, isFavor))
     }
 
     private suspend fun fetchAllEntitiesInternal() {

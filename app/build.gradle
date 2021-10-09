@@ -39,7 +39,7 @@ dependencies {
     implementation project(path: ':storage')
 
     implementation project(path: ':di-core')
-
+    implementation project(path: ':remote-syncer')
 
     implementation 'com.google.firebase:firebase-messaging-ktx:22.0.0'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2'

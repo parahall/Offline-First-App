@@ -6,6 +6,8 @@ import androidx.room.Entity
 import androidx.room.Junction
 import androidx.room.PrimaryKey
 import androidx.room.Relation
+import java.util.Date
+import java.util.UUID
 
 sealed class StorageEntity
 
@@ -45,7 +47,6 @@ data class EnrichedPersonEntity(
     )
     val favoriteProps: FavoritePersonEntity?
 )
-
 
 @Entity(tableName = "favorite_people_table")
 data class FavoritePersonEntity(
@@ -224,3 +225,26 @@ data class StarshipEntity(
     val starshipClass: String,
     val url: String
 ) : StorageEntity()
+
+
+@Entity(
+    tableName = "remote_data"
+)
+data class PersistedRemoteDataEntity(
+    @ColumnInfo(name = "timestamp")
+    val timestamp: Date,
+    @ColumnInfo(name = "type")
+    val typeId: Int,
+    @ColumnInfo(name = "sync_status")
+    val syncStatus: String,
+    @ColumnInfo(name = "data")
+    val data: String,
+    @ColumnInfo(name = "metadata")
+    val metadata: Map<String, String>?
+) {
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "id")
+    var id: Long = generateLocalId()
+}
+
+fun generateLocalId() = UUID.randomUUID().leastSignificantBits
