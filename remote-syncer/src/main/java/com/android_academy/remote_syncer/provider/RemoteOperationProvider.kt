@@ -1,6 +1,5 @@
 package com.android_academy.remote_syncer.provider
 
-import com.android_academy.remote_syncer.ISuccessHandler
 import com.android_academy.remote_syncer.models.RemoteResponse
 import com.android_academy.remote_syncer.operations.RemoteOperation
 import com.android_academy.remote_syncer.operations.RemoteOperationType
@@ -21,8 +20,8 @@ class RemoteOperationMapperImpl(
 
 
 interface RemoteOperationProvider<T : RemoteOperation, R : RemoteResponse> {
-    fun provideParser(): IOperationParser<T>
-    fun providerOperationHandler(): IOperationHandler<T, R>
-    fun provideSuccessHandler(): ISuccessHandler<T, R>
-    fun provideFailureHandler(): IFailureHandler<T>
+    fun provideParser(): OperationParser<T>
+    fun providerOperationHandler(): OperationHandler<T, R>
+    fun provideSuccessHandler(): SuccessHandler<T, R>
+    fun provideFailureHandler(): FailureHandler<T>
 }

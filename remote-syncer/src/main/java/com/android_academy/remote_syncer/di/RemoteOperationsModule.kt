@@ -2,8 +2,8 @@ package com.android_academy.remote_syncer.di
 
 import androidx.work.WorkManager
 import com.android_academy.network.StarWarsApi
-import com.android_academy.remote_syncer.EmptySuccessHandler
-import com.android_academy.remote_syncer.ISuccessHandler
+import com.android_academy.remote_syncer.provider.EmptySuccessHandler
+import com.android_academy.remote_syncer.provider.SuccessHandler
 import com.android_academy.remote_syncer.RemoteDataObserver
 import com.android_academy.remote_syncer.RemoteDataObserverImpl
 import com.android_academy.remote_syncer.RemotePersistenceSource
@@ -22,9 +22,9 @@ import com.android_academy.remote_syncer.operations.toggle_favorite_person.Toggl
 import com.android_academy.remote_syncer.operations.toggle_favorite_person.ToggleFavoritePersonHandler
 import com.android_academy.remote_syncer.operations.toggle_favorite_person.ToggleFavoritePersonParser
 import com.android_academy.remote_syncer.operations.toggle_favorite_person.ToggleFavoritePersonProvider
-import com.android_academy.remote_syncer.provider.IFailureHandler
-import com.android_academy.remote_syncer.provider.IOperationHandler
-import com.android_academy.remote_syncer.provider.IOperationParser
+import com.android_academy.remote_syncer.provider.FailureHandler
+import com.android_academy.remote_syncer.provider.OperationHandler
+import com.android_academy.remote_syncer.provider.OperationParser
 import com.android_academy.remote_syncer.provider.RemoteOperationMapper
 import com.android_academy.remote_syncer.provider.RemoteOperationMapperImpl
 import com.android_academy.remote_syncer.provider.RemoteOperationProvider
@@ -102,10 +102,10 @@ class RemoteOperationsModule {
     @IntoMap
     @StarWarsOperationTypeKey(StarWarsOperationType.CHANGE_FAVORITE_PERSON_STATUS)
     fun provideChangeFavoritePersonProvider(
-        parser: IOperationParser<FavoriteRemoteOperation>,
-        operationHandler: IOperationHandler<FavoriteRemoteOperation, FavoritePersonResponse>,
-        failureHandler: IFailureHandler<FavoriteRemoteOperation>,
-        successHandler: ISuccessHandler<FavoriteRemoteOperation, FavoritePersonResponse>
+        parser: OperationParser<FavoriteRemoteOperation>,
+        operationHandler: OperationHandler<FavoriteRemoteOperation, FavoritePersonResponse>,
+        failureHandler: FailureHandler<FavoriteRemoteOperation>,
+        successHandler: SuccessHandler<FavoriteRemoteOperation, FavoritePersonResponse>
     ): RemoteOperationProvider<*, *> {
         return ToggleFavoritePersonProvider(
             parser,
@@ -116,23 +116,23 @@ class RemoteOperationsModule {
     }
 
     @Provides
-    fun provideToggleFavoritePersonParser(moshi: Moshi): IOperationParser<FavoriteRemoteOperation> {
+    fun provideToggleFavoritePersonParser(moshi: Moshi): OperationParser<FavoriteRemoteOperation> {
         return ToggleFavoritePersonParser(moshi)
     }
 
     @Provides
-    fun provideToggleFavoritePersonHandler(starWarsApi: StarWarsApi): IOperationHandler<FavoriteRemoteOperation, FavoritePersonResponse> {
+    fun provideToggleFavoritePersonHandler(starWarsApi: StarWarsApi): OperationHandler<FavoriteRemoteOperation, FavoritePersonResponse> {
         return ToggleFavoritePersonHandler(starWarsApi)
     }
 
     @Provides
-    fun provideToggleFavoritePersonSuccessHandler(): ISuccessHandler<FavoriteRemoteOperation, FavoritePersonResponse> {
+    fun provideToggleFavoritePersonSuccessHandler(): SuccessHandler<FavoriteRemoteOperation, FavoritePersonResponse> {
         return EmptySuccessHandler()
     }
 
 
     @Provides
-    fun provideToggleFavoritePersonFailureHandler(storageSource: StorageSource): IFailureHandler<FavoriteRemoteOperation> {
+    fun provideToggleFavoritePersonFailureHandler(storageSource: StorageSource): FailureHandler<FavoriteRemoteOperation> {
         return ToggleFavoritePersonFailureHandler(storageSource)
     }
 }

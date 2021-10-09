@@ -2,10 +2,10 @@ package com.android_academy.remote_syncer.operations.toggle_favorite_person
 
 import com.android_academy.network.StarWarsApi
 import com.android_academy.network.safeResultApiCall
-import com.android_academy.remote_syncer.provider.IOperationHandler
+import com.android_academy.remote_syncer.provider.OperationHandler
 
 class ToggleFavoritePersonHandler(private val starWarsApi: StarWarsApi) :
-    IOperationHandler<FavoriteRemoteOperation, FavoritePersonResponse>() {
+    OperationHandler<FavoriteRemoteOperation, FavoritePersonResponse>() {
     override suspend fun executeActual(action: FavoriteRemoteOperation): Result<FavoritePersonResponse> {
         val markPersonFavorite =
             safeResultApiCall { starWarsApi.markPersonFavorite(action.personId, action.isFavor) }

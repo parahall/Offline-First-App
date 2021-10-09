@@ -4,7 +4,7 @@ import android.util.Log
 import com.android_academy.remote_syncer.operations.RemoteOperation
 
 
-abstract class IOperationParser<T : RemoteOperation> {
+abstract class OperationParser<T : RemoteOperation> {
 
     protected abstract fun toJsonActual(operation: T): String?
 

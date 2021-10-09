@@ -3,7 +3,7 @@ package com.android_academy.remote_syncer.provider
 import android.util.Log
 import com.android_academy.remote_syncer.operations.RemoteOperation
 
-abstract class IFailureHandler<T : RemoteOperation> {
+abstract class FailureHandler<T : RemoteOperation> {
 
     protected abstract suspend fun executeOnFailureActual(data: T, throwable: Throwable?)
 

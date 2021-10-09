@@ -4,7 +4,7 @@ import android.util.Log
 import com.android_academy.remote_syncer.operations.RemoteOperation
 import com.android_academy.remote_syncer.models.RemoteResponse
 
-abstract class IOperationHandler<T : RemoteOperation, R : RemoteResponse> {
+abstract class OperationHandler<T : RemoteOperation, R : RemoteResponse> {
 
     protected abstract suspend fun executeActual(action: T): Result<R>
 

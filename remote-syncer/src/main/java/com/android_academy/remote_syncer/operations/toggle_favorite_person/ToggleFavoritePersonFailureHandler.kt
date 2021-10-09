@@ -1,11 +1,11 @@
 package com.android_academy.remote_syncer.operations.toggle_favorite_person
 
 import android.util.Log
-import com.android_academy.remote_syncer.provider.IFailureHandler
+import com.android_academy.remote_syncer.provider.FailureHandler
 import com.android_academy.storage.StorageSource
 
 class ToggleFavoritePersonFailureHandler(private val storageSource: StorageSource) :
-    IFailureHandler<FavoriteRemoteOperation>() {
+    FailureHandler<FavoriteRemoteOperation>() {
     override suspend fun executeOnFailureActual(
         data: FavoriteRemoteOperation,
         throwable: Throwable?

@@ -1,10 +1,10 @@
-package com.android_academy.remote_syncer
+package com.android_academy.remote_syncer.provider
 
 import android.util.Log
 import com.android_academy.remote_syncer.models.RemoteResponse
 import com.android_academy.remote_syncer.operations.RemoteOperation
 
-abstract class ISuccessHandler<T : RemoteOperation, R : RemoteResponse> {
+abstract class SuccessHandler<T : RemoteOperation, R : RemoteResponse> {
 
     protected abstract suspend fun executeOnSuccessActual(action: T, response: R)
 
@@ -26,6 +26,6 @@ abstract class ISuccessHandler<T : RemoteOperation, R : RemoteResponse> {
     }
 }
 
-class EmptySuccessHandler<T : RemoteOperation, R : RemoteResponse> : ISuccessHandler<T, R>() {
+class EmptySuccessHandler<T : RemoteOperation, R : RemoteResponse> : SuccessHandler<T, R>() {
     override suspend fun executeOnSuccessActual(action: T, response: R) {}
 }

@@ -42,5 +42,8 @@ interface StarWarsApi {
     suspend fun getStarship(@Path("id") specieId: String): Response<StarshipResponse>
 
     @POST("person/{id}/")
-    suspend fun markPersonFavorite(@Path("id") personId: Int,@Query("is_favor") favor: Boolean) : Response<Unit>
+    suspend fun markPersonFavorite(
+        @Path("id") personId: Int,
+        @Query("is_favor") favor: Boolean
+    ): Response<Unit>
 }
