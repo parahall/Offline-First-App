@@ -25,13 +25,9 @@ class RemoteServiceImpl(
     ) {
         val remoteOperationProvider = remoteOperationMapper[operation.identifier] ?: return
         val jsonData = remoteOperationProvider.provideParser().toJson(operation) ?: return
-        val remoteData = RemoteData(
-            id = NEW_ID,
-            timestamp = Date(),
-            type = operation.identifier,
-            syncStatus = SyncStatus.NEW,
-            data = jsonData,
-            metadata = metadata
+        val remoteData = RemoteData(id = NEW_ID, timestamp = Date(),
+                                    type = operation.identifier, syncStatus = SyncStatus.NEW,
+                                    data = jsonData, metadata = metadata
         )
         persistenceSource.store(remoteData)
 

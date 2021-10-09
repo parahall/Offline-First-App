@@ -12,7 +12,6 @@ data class FavoriteRemoteOperation(
     val isFavor: Boolean
 ) : RemoteOperation {
     override val identifier = StarWarsOperationType.CHANGE_FAVORITE_PERSON_STATUS
-    override val remoteCurrentData: RemoteCurrentData? = null
 }
 
 object FavoritePersonResponse : RemoteResponse
