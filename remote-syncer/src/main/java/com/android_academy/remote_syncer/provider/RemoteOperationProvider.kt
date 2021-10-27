@@ -21,7 +21,7 @@ class RemoteOperationMapperImpl(
 
 interface RemoteOperationProvider<T : RemoteOperation, R : RemoteResponse> {
     fun provideParser(): OperationParser<T>
-    fun providerOperationHandler(): OperationHandler<T, R>
+    fun providerOperationHandler(): OperationExecutor<T, R>
     fun provideSuccessHandler(): SuccessHandler<T, R>
     fun provideFailureHandler(): FailureHandler<T>
 }

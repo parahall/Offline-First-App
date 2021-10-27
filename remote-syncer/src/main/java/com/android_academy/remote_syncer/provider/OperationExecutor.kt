@@ -4,9 +4,9 @@ import android.util.Log
 import com.android_academy.remote_syncer.operations.RemoteOperation
 import com.android_academy.remote_syncer.models.RemoteResponse
 
-abstract class OperationHandler<T : RemoteOperation, R : RemoteResponse> {
+abstract class OperationExecutor<T : RemoteOperation, R : RemoteResponse> {
 
-    protected abstract suspend fun executeActual(action: T): Result<R>
+    protected abstract suspend fun executeActual(operation: T): Result<R>
 
     suspend fun execute(data: RemoteOperation): Result<R> {
         @Suppress("UNCHECKED_CAST")

@@ -4,7 +4,7 @@ import android.util.Log
 import com.android_academy.remote_syncer.provider.FailureHandler
 import com.android_academy.storage.StorageSource
 
-class ToggleFavoritePersonFailureHandler(private val storageSource: StorageSource) :
+class FavoritePersonFailureHandler(private val storageSource: StorageSource) :
     FailureHandler<FavoriteRemoteOperation>() {
     override suspend fun executeOnFailureActual(
         data: FavoriteRemoteOperation,

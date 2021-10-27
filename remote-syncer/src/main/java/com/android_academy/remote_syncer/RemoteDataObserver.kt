@@ -136,8 +136,8 @@ class RemoteDataObserverImpl(
     }
 
 
-    private fun filterNewRemoteDataOnly(remoteDataList: List<RemoteData>): List<RemoteData> {
-        return remoteDataList.filter { remoteData ->
+    private fun filterNewRemoteDataOnly(list: List<RemoteData>): List<RemoteData> {
+        return list.filter { remoteData ->
             remoteData.syncStatus == SyncStatus.NEW
         }
     }

@@ -70,7 +70,7 @@ interface EnrichDao {
 
 @Dao
 interface PersonDao {
-    @Query("SELECT * FROM people_table")
+    @Query("SELECT * FROM people_table order by name")
     fun getAll(): Flow<List<PersonEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

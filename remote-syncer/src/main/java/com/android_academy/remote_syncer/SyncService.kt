@@ -80,11 +80,8 @@ class SyncServiceImpl(
         )
     }
 
-    private suspend fun onCurrentRunFailure(
-        throwable: Throwable?,
-        runAttemptCount: Int,
-        remoteData: RemoteData? = null,
-        provider: RemoteOperationProvider<*, *>? = null
+    private suspend fun onCurrentRunFailure(throwable: Throwable?, runAttemptCount: Int,
+        remoteData: RemoteData? = null, provider: RemoteOperationProvider<*, *>? = null
     ): ListenableWorker.Result {
         val isLastAttempt = runAttemptCount >= MAX_ATTEMPTS
         Log.e(TAG, "onCurrentRunFailure", throwable)

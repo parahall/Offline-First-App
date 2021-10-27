@@ -57,7 +57,8 @@ class RemoteSchedulerImpl<T : RemoteWorker>(
                 request
             )
 
-        persistentSource.update(remoteData.copy(syncStatus = SyncStatus.PENDING))
+        val pendingRemoteData = remoteData.copy(syncStatus = SyncStatus.PENDING)
+        persistentSource.update(pendingRemoteData)
     }
 
     companion object {
