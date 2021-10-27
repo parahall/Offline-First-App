@@ -1,4 +1,4 @@
-package com.android_academy.custompagination
+package com.android_academy.offline_first_app
 
 import android.app.Application
 import androidx.work.Constraints
@@ -6,10 +6,10 @@ import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.NetworkType
 import androidx.work.PeriodicWorkRequest
 import androidx.work.WorkManager
-import com.android_academy.custompagination.di.AppComponent
-import com.android_academy.custompagination.di.AppModule
-import com.android_academy.custompagination.di.DaggerAppComponent
-import com.android_academy.custompagination.prefetch.StarWarsWorker
+import com.android_academy.offline_first_app.di.AppComponent
+import com.android_academy.offline_first_app.di.AppModule
+import com.android_academy.offline_first_app.di.DaggerAppComponent
+import com.android_academy.offline_first_app.prefetch.StarWarsWorker
 import com.android_academy.remote_syncer.RemoteDataObserver
 import com.android_academy.remote_syncer.RemoteInjectProvider
 import com.android_academy.remote_syncer.SpecificRemoteWorker

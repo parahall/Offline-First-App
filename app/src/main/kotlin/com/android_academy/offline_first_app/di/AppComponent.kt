@@ -1,10 +1,10 @@
-package com.android_academy.custompagination.di
+package com.android_academy.offline_first_app.di
 
-import com.android_academy.custompagination.prefetch.PushMessagingService
-import com.android_academy.custompagination.prefetch.StarWarsWorker
-import com.android_academy.custompagination.repo.StarWarsRepo
-import com.android_academy.custompagination.repo.di.StarWarsRepoModule
-import com.android_academy.custompagination.ui.main.di.MainFragmentComponent
+import com.android_academy.offline_first_app.prefetch.PushMessagingService
+import com.android_academy.offline_first_app.prefetch.StarWarsWorker
+import com.android_academy.offline_first_app.repo.StarWarsRepo
+import com.android_academy.offline_first_app.repo.di.StarWarsRepoModule
+import com.android_academy.offline_first_app.ui.main.di.MainFragmentComponent
 import com.android_academy.di_core.ApplicationScope
 import com.android_academy.network.StarWarsApi
 import com.android_academy.network.di.NetworkModule

@@ -1,4 +1,4 @@
-package com.android_academy.custompagination
+package com.android_academy.offline_first_app
 
 import java.util.concurrent.ConcurrentHashMap
 

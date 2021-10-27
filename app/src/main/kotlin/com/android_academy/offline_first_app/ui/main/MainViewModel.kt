@@ -1,4 +1,4 @@
-package com.android_academy.custompagination.ui.main
+package com.android_academy.offline_first_app.ui.main
 
 import android.util.Log
 import androidx.lifecycle.LifecycleOwner
@@ -6,9 +6,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.android_academy.custompagination.models.Person
-import com.android_academy.custompagination.models.toPerson
-import com.android_academy.custompagination.repo.StarWarsRepo
+import com.android_academy.offline_first_app.models.Person
+import com.android_academy.offline_first_app.models.toPerson
+import com.android_academy.offline_first_app.repo.StarWarsRepo
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.collect

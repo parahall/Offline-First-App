@@ -1,4 +1,4 @@
-package com.android_academy.custompagination.ui.main
+package com.android_academy.offline_first_app.ui.main
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,9 +11,9 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.android_academy.custompagination.R
-import com.android_academy.custompagination.StarWarsApp
-import com.android_academy.custompagination.models.Person
+import com.android_academy.offline_first_app.R
+import com.android_academy.offline_first_app.StarWarsApp
+import com.android_academy.offline_first_app.models.Person
 import javax.inject.Inject
 
 

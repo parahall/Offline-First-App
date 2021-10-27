@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.android_academy.custompagination">
+    package="com.android_academy.offline_first_app">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name=".StarWarsApp"
+        android:name="com.android_academy.offline_first_app.StarWarsApp"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.CustomPagination"
+        android:theme="@style/Theme.OfflineFirstApp"
 
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".ui.main.MainActivity"
+            android:name="com.android_academy.offline_first_app.ui.main.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,7 +26,7 @@
         </activity>
 
         <service
-            android:name=".prefetch.PushMessagingService"
+            android:name="com.android_academy.offline_first_app.prefetch.PushMessagingService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />

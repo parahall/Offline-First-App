@@ -1,4 +1,4 @@
-package com.android_academy.custompagination.utils
+package com.android_academy.offline_first_app.utils
 
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Deferred

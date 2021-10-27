@@ -1,4 +1,4 @@
-package com.android_academy.custompagination
+package com.android_academy.offline_first_app
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

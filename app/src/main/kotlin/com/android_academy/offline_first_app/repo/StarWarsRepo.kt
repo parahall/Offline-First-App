@@ -1,10 +1,10 @@
-package com.android_academy.custompagination.repo
+package com.android_academy.offline_first_app.repo
 
 import android.util.Log
 import com.android_academy.remote_syncer.RemoteService
 import com.android_academy.remote_syncer.operations.toggle_favorite_person.FavoriteRemoteOperation
-import com.android_academy.custompagination.repo.StarWarsRepo.Companion.TAG
-import com.android_academy.custompagination.utils.CacheOnSuccess
+import com.android_academy.offline_first_app.repo.StarWarsRepo.Companion.TAG
+import com.android_academy.offline_first_app.utils.CacheOnSuccess
 import com.android_academy.network.NetworkSource
 import com.android_academy.network.models.EntityConvertible
 import com.android_academy.network.models.PagedResponse

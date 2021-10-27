@@ -1,7 +1,7 @@
-package com.android_academy.custompagination.prefetch
+package com.android_academy.offline_first_app.prefetch
 
-import com.android_academy.custompagination.StarWarsApp
-import com.android_academy.custompagination.repo.StarWarsRepo
+import com.android_academy.offline_first_app.StarWarsApp
+import com.android_academy.offline_first_app.repo.StarWarsRepo
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import kotlinx.coroutines.CoroutineScope

@@ -1,7 +1,6 @@
-package com.android_academy.custompagination
+package com.android_academy.offline_first_app
 
 import org.junit.Assert
-import org.junit.Assert.assertTrue
 import org.junit.Test
 
 /**

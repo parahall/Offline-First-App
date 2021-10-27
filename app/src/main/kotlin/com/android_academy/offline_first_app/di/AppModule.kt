@@ -1,8 +1,7 @@
-package com.android_academy.custompagination.di
+package com.android_academy.offline_first_app.di
 
 import android.app.Application
 import android.content.Context
-import androidx.work.Configuration
 import androidx.work.WorkManager
 import com.android_academy.di_core.ApplicationScope
 import dagger.Module

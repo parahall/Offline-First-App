@@ -1,11 +1,11 @@
-package com.android_academy.custompagination.prefetch
+package com.android_academy.offline_first_app.prefetch
 
 import android.content.Context
 import android.util.Log
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
-import com.android_academy.custompagination.StarWarsApp
-import com.android_academy.custompagination.repo.StarWarsRepo
+import com.android_academy.offline_first_app.StarWarsApp
+import com.android_academy.offline_first_app.repo.StarWarsRepo
 import javax.inject.Inject
 
 class StarWarsWorker(appContext: Context, workerParams: WorkerParameters) :

@@ -2,12 +2,12 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/CustomPagination.iml" filepath="$PROJECT_DIR$/.idea/modules/CustomPagination.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/CustomPagination.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/CustomPagination.app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/di-core/CustomPagination.di-core.iml" filepath="$PROJECT_DIR$/.idea/modules/di-core/CustomPagination.di-core.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/network/CustomPagination.network.iml" filepath="$PROJECT_DIR$/.idea/modules/network/CustomPagination.network.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/remote-syncer/CustomPagination.remote-syncer.iml" filepath="$PROJECT_DIR$/.idea/modules/remote-syncer/CustomPagination.remote-syncer.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/storage/CustomPagination.storage.iml" filepath="$PROJECT_DIR$/.idea/modules/storage/CustomPagination.storage.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/OfflineFirstApp.iml" filepath="$PROJECT_DIR$/.idea/modules/OfflineFirstApp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/OfflineFirstApp.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/OfflineFirstApp.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/di-core/OfflineFirstApp.di-core.iml" filepath="$PROJECT_DIR$/.idea/modules/di-core/OfflineFirstApp.di-core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/network/OfflineFirstApp.network.iml" filepath="$PROJECT_DIR$/.idea/modules/network/OfflineFirstApp.network.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/remote-syncer/OfflineFirstApp.remote-syncer.iml" filepath="$PROJECT_DIR$/.idea/modules/remote-syncer/OfflineFirstApp.remote-syncer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/storage/OfflineFirstApp.storage.iml" filepath="$PROJECT_DIR$/.idea/modules/storage/OfflineFirstApp.storage.iml" />
     </modules>
   </component>
 </project>

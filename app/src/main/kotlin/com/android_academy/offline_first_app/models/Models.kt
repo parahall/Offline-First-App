@@ -1,4 +1,4 @@
-package com.android_academy.custompagination.models
+package com.android_academy.offline_first_app.models
 
 import com.android_academy.storage.entities.EnrichedPersonEntity
 import com.android_academy.storage.entities.FilmEntity

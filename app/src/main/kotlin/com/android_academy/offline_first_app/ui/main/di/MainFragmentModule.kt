@@ -1,11 +1,10 @@
-package com.android_academy.custompagination.ui.main.di
+package com.android_academy.offline_first_app.ui.main.di
 
 import androidx.lifecycle.ViewModelProvider
-import com.android_academy.custompagination.repo.StarWarsRepo
-import com.android_academy.custompagination.ui.main.MainFragment
-import com.android_academy.custompagination.ui.main.MainFragmentViewModelFactory
-import com.android_academy.custompagination.ui.main.MainViewModel
-import com.squareup.moshi.Moshi
+import com.android_academy.offline_first_app.repo.StarWarsRepo
+import com.android_academy.offline_first_app.ui.main.MainFragment
+import com.android_academy.offline_first_app.ui.main.MainFragmentViewModelFactory
+import com.android_academy.offline_first_app.ui.main.MainViewModel
 import dagger.Module
 import dagger.Provides
 
